@@ -1,0 +1,74 @@
+#programs
+alias v='nvim'
+alias md='mkdir'
+alias f='ranger'
+alias s-f='sudo ranger'
+alias speedtest='~/portable/speedtest'
+
+
+#ls
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+#apt-get
+#alias update='sudo apt-fast update'
+#alias upgrade='sudo apt-fast upgrade'
+#alias install='sudo apt-fast install'
+#alias remove='sudo apt-fast remove'
+#alias autoclean='sudo apt-fast autoclean'
+#alias purge='sudo apt-fast purge'
+#alias reinstall='sudo apt-fast install --reinstall'
+
+alias u='sudo pacman -Syu'
+alias i='sudo pacman -S'
+alias ui='sudo pacman -Rsc'
+alias pm='sudo pamac-manager'
+
+#cd
+alias ..='cd ..'
+alias ...='cd ..; cd ..'
+alias ....='cd ..; cd ..; cd ..'
+alias webs='cd /var/www'
+alias sites-available='cd /etc/apache2/sites-available'
+alias proyects='cd ~/Proyects'
+alias notes='cd ~/Documents/Notes'
+alias music='cd ~/Music'
+alias knowledge='cd ~/Documents/Notes/knowledge'
+alias scripts='cd ~/Scripts'
+alias downloads='cd ~/Downloads'
+alias games='cd ~/Games'
+alias screenshot='cd ~/Pictures/Screenshots'
+alias conf='~/.config'
+
+#nvim
+alias bashrc='nvim ~/.bashrc'
+alias aliases='nvim ~/.aliases'
+alias vrc='nvim -p ~/.vimrc ~/.vim/plugins.vim ~/.vim/maps.vim'
+alias vplugins='nvim ~/.vim/plugins.vim'
+alias vmaps='nvim ~/.vim/maps.vim'
+
+alias hosts='sudo nano /etc/hosts'
+
+#ping
+alias p='ping google.com'
+
+#web'
+alias startweb='sudo systemctl start httpd'
+alias stopweb='sudo systemctl stop httpd'
+alias startsql='sudo systemctl start mysqld'
+alias stopsql='sudo systemctl stop mysqld'
+
+#other
+alias minecraft='java -jar ~/.minecraft/launcher.jar'
+#alias terraria='~/Games/Terraria/start.sh'
+alias r='reset'
+alias s='sudo'
+alias l='xrandr --output DisplayPort-0 --gamma'
+alias startcam='sudo modprobe videodev v4l2loopback-dc snd-aloop'
+alias homespeed='sudo hdparm -tT /dev/sda1'
+alias diskspeed='sudo hparm -tT'
+alias systemspeed='sudo hdparm -tT /dev/nvme0n1p4'
+alias foldersize='du -hs '
+alias hibernate='systemctl hibernate'
+alias findtext='grep  -n -R'

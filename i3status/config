@@ -1,0 +1,75 @@
+general {
+    #output_format = "dzen2"
+    colors = true
+    markup = "pango"
+    interval = 1
+    separator = "X"
+}
+
+order += "read_file CHRONOMETER"
+order += "read_file TIMER"
+#order += "read_file WEATHER"
+order += "disk /"
+order += "disk /home/ivan/"
+order += "volume master"
+order += "memory"
+order += "cpu_usage"
+order += "cpu_temperature 0"
+order += "tztime local"
+
+disk "/" {
+    format = "🖴 %avail"
+    #align = "left"
+    #min_width = 100
+    #separator = false
+    #separator_block_width = 1
+}
+
+disk "/home/ivan/" {
+    format = "🏠 %avail"
+    #align = "left"
+    #min_width = 100
+    #separator = false
+    #separator_block_width = 1
+}
+
+volume master {
+        format = "🔊 %volume"
+        format_muted = "🔊⃠ (%volume)"
+        device = "default"
+        mixer = "Master"
+        mixer_idx = 0
+}
+
+
+tztime local {
+        format = "%a %d-%m-%Y %T"
+}
+
+memory {
+        format = "RAM: %percentage_used"
+}
+
+cpu_usage{
+        format = "CPU: %usage"
+}
+
+cpu_temperature 0{
+        format = "%degrees °C"
+        path = "/sys/class/hwmon/hwmon0/device/hwmon/hwmon0/temp1_input"
+}
+
+read_file TIMER{
+        format = "<span color='#EDEDED'>%content</span>"
+        path = "/home/ivan/Scripts/.timer"
+}
+
+read_file CHRONOMETER{
+        format = "<span color='#EDEDED'>%content</span>"
+        path = "/home/ivan/Scripts/.stopwatch"
+}
+
+read_file WEATHER{
+        format = "<span color='#EDEDED'>%content</span>"
+        path = "/home/ivan/.weather"
+}

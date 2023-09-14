@@ -1,0 +1,129 @@
+# key variables
+set $mod Mod4
+set $mod2 Mod1
+
+# Start XDG autostart .desktop files using dex. See also
+# https://wiki.archlinux.org/index.php/XDG_Autostart
+exec --no-startup-id dex --autostart --environment i3
+
+# border config
+default_border pixel 2
+smart_borders on
+
+# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
+# screen before suspend. Use loginctl lock-session to lock your screen.
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+
+# and nm-applet is a desktop environment-independent system tray GUI for it.
+exec --no-startup-id nm-applet
+
+exec --no-startup-id feh --bg-scale ~/Pictures/wallpaper/background.jpg --bg-scale ~/Pictures/wallpaper/vertical.png
+
+# Use pactl to adjust volume in PulseAudio.
+set $refresh_i3status killall -SIGUSR1 i3status
+bindsym $mod+v exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
+bindsym $mod+w exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3status
+bindsym $mod+m exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# start a terminal
+bindsym $mod+Return exec alacritty
+
+# kill focused window
+bindsym $mod+period kill
+
+# start rufi (a program launcher)
+bindsym $mod+p exec --no-startup-id rofi -combi-modi drun -theme rounded-blue-dark -font "hack 13" -show combi -display-combi "Ejecutar:" disable-history true -sorting-method "normal" -sort true -display-drun "" -config -icon-theme "Papirus" -show-icons -combi-display-format "{text} {mode}" -no-levenshtein-sort
+#bindsym $mod+p exec --no-startup-id dmenu_run
+
+#toggle fullscrean
+bindsym $mod+u fullscreen toggle
+
+#toggle float
+bindsym $mod+space floating toggle
+
+#restart i3 interface
+bindsym $mod+Shift+r restart
+
+#take simple screenshot
+bindsym --release Print exec --no-startup-id ~/Scripts/screenshot.sh
+
+#take selected screenshot
+bindsym --release $mod+Print exec --no-startup-id ~/Scripts/sscreenshot.sh
+
+# Open scripts
+bindsym $mod+j exec ~/Scripts/checklist/checklist.sh
+
+# change focus
+bindsym $mod2+r focus left
+bindsym $mod2+t focus down
+bindsym $mod2+n focus up
+bindsym $mod2+s focus right
+
+bindsym $mod+Tab focus down
+bindsym $mod+Shift+Tab focus up
+
+# change position
+bindsym $mod2+g move left
+bindsym $mod2+c move down
+bindsym $mod2+h move up
+bindsym $mod2+l move right
+
+# toggle sticky windows
+bindsym $mod+a sticky toggle
+
+bindsym $mod+i focus parent
+
+# set workspace in screens
+workspace  1 output HDMI-A-0 
+workspace  2 output HDMI-A-0 
+workspace  3 output HDMI-A-0 
+workspace  4 output HDMI-A-0 
+workspace  5 output HDMI-A-0 
+workspace F1 output DisplayPort-0
+workspace F2 output DisplayPort-0
+workspace F3 output DisplayPort-0
+workspace F4 output DisplayPort-0
+workspace F5 output DisplayPort-0
+
+# switch to workspace
+bindsym $mod+1  workspace 1
+bindsym $mod+2  workspace 2
+bindsym $mod+3  workspace 3
+bindsym $mod+4  workspace 4
+bindsym $mod+5  workspace 5
+bindsym $mod+F1 workspace F1
+bindsym $mod+F2 workspace F2
+bindsym $mod+F3 workspace F3
+bindsym $mod+F4 workspace F4
+bindsym $mod+F5 workspace F5
+
+# move to workspace
+bindsym $mod+Shift+1  move container to workspace 1
+bindsym $mod+Shift+2  move container to workspace 2
+bindsym $mod+Shift+3  move container to workspace 3
+bindsym $mod+Shift+4  move container to workspace 4
+bindsym $mod+Shift+5  move container to workspace 5
+bindsym $mod+Shift+F1 move container to workspace F1
+bindsym $mod+Shift+F2 move container to workspace F2
+bindsym $mod+Shift+F3 move container to workspace F3
+bindsym $mod+Shift+F4 move container to workspace F4
+bindsym $mod+Shift+F5 move container to workspace F5
+
+#toggle the window stacking
+bindsym $mod+o layout toggle stacking split
+
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+
+bar {
+#HERE WAS "tray_output primary"
+status_command i3status
+position bottom
+tray_output none
+font pango:DejaVu Sans Mono 10
+separator_symbol |
+}
