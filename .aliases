@@ -21,9 +21,11 @@ alias l='ls -CF'
 #alias reinstall='sudo apt-fast install --reinstall'
 
 alias u='sudo pacman -Syu'
-alias i='sudo pacman -S'
+alias i='sudo pacman -S --needed'
 alias ui='sudo pacman -Rsc'
 alias pm='sudo pamac-manager'
+alias pi='sudo pamac install'
+alias pu='sudo pamac update'
 
 #cd
 alias ..='cd ..'
@@ -40,6 +42,7 @@ alias downloads='cd ~/Downloads'
 alias games='cd ~/Games'
 alias screenshot='cd ~/Pictures/Screenshots'
 alias conf='~/.config'
+alias work='cd ~/Work/msi/www7; v'
 
 #nvim
 alias bashrc='nvim ~/.bashrc'
@@ -48,7 +51,7 @@ alias vrc='nvim -p ~/.vimrc ~/.vim/plugins.vim ~/.vim/maps.vim'
 alias vplugins='nvim ~/.vim/plugins.vim'
 alias vmaps='nvim ~/.vim/maps.vim'
 
-alias hosts='sudo nano /etc/hosts'
+alias hosts='sudo nvim /etc/hosts'
 
 #ping
 alias p='ping google.com'
@@ -64,11 +67,25 @@ alias minecraft='java -jar ~/.minecraft/launcher.jar'
 #alias terraria='~/Games/Terraria/start.sh'
 alias r='reset'
 alias s='sudo'
+alias usdo='sudo'
+alias suod='sudo'
+alias dous='sudo'
+alias soud='sudo'
+alias duos='sudo'
+
 alias l='xrandr --output DisplayPort-0 --gamma'
 alias startcam='sudo modprobe videodev v4l2loopback-dc snd-aloop'
 alias homespeed='sudo hdparm -tT /dev/sda1'
-alias diskspeed='sudo hparm -tT'
+alias diskspeed='sudo hdparm -tT'
 alias systemspeed='sudo hdparm -tT /dev/nvme0n1p4'
 alias foldersize='du -hs '
 alias hibernate='systemctl hibernate'
-alias findtext='grep  -n -R'
+alias findtext='grep  -n -R's
+
+#qmk
+alias qmkc='qmk compile -kb ~/myLinuxConfig/qmk_firmware/keyboards/keychron/v1/ansi_encoder -km melokey'
+alias qmkf='qmk flash  ~/myLinuxConfig/qmk_firmware/keychron_v1_ansi_encoder_melokey.bin'
+alias melokeys='v ~/myLinuxConfig/melokey/keymap.c'
+
+alias vdw="xdotool key --repeat $1 122"
+alias vup="xdotool key --repeat $1 123"

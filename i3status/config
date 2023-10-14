@@ -15,6 +15,7 @@ order += "volume master"
 order += "memory"
 order += "cpu_usage"
 order += "cpu_temperature 0"
+#order += "read_file SUBE"
 order += "tztime local"
 
 disk "/" {
@@ -73,3 +74,8 @@ read_file WEATHER{
         format = "<span color='#EDEDED'>%content</span>"
         path = "/home/ivan/.weather"
 }
+
+#read_file SUBE{
+        #format = "<span color='#EDEDED'>%content<span>"
+        #path = "/home/ivan/.sube"
+ #}

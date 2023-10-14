@@ -21,10 +21,19 @@ exec --no-startup-id feh --bg-scale ~/Pictures/wallpaper/background.jpg --bg-sca
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
-bindsym $mod+v exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
-bindsym $mod+w exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3status
-bindsym $mod+m exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +3% && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -3% && $refresh_i3status
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+bindsym XF86AudioNext exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
+bindsym XF86AudioPrev exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous
+bindsym XF86AudioPlay exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
+bindsym XF86AudioPause exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Pause
+
+bindsym XF86Tools exec --no-startup-id ~/Scripts/switchsound.sh
+
+bindsym $mod+XF86AudioPlay exec --no-startup-id spotify-launcher
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -36,8 +45,10 @@ bindsym $mod+Return exec alacritty
 bindsym $mod+period kill
 
 # start rufi (a program launcher)
-bindsym $mod+p exec --no-startup-id rofi -combi-modi drun -theme rounded-blue-dark -font "hack 13" -show combi -display-combi "Ejecutar:" disable-history true -sorting-method "normal" -sort true -display-drun "" -config -icon-theme "Papirus" -show-icons -combi-display-format "{text} {mode}" -no-levenshtein-sort
-#bindsym $mod+p exec --no-startup-id dmenu_run
+bindsym $mod+p exec --no-startup-id rofi -combi-modi drun -theme /home/ivan/myLinuxConfig/rofi/rounded-blue-dark -font "hack 13" -show combi -display-combi "Ejecutar:" disable-history true -sorting-method "normal" -sort true -display-drun "" -config -icon-theme "Papirus" -show-icons -combi-display-format "{text} {mode}" -no-levenshtein-sort
+
+#bindsym $mod+p exec --no-startup-id rofi -combi-modi drun -theme /home/ivan/tmp/rofi/files/launchers/type-2/style-10.rasi -font "hack 13" -show combi -display-combi "Ejecutar:" disable-history true -sorting-method "normal" -sort true -display-drun "" -config -icon-theme "Papirus" -show-icons -combi-display-format "{text} {mode}" -no-levenshtein-sort
+bindsym $mod+Shift+p exec --no-startup-id ~/Scripts/$(ls ~/Scripts/ | dmenu) 
 
 #toggle fullscrean
 bindsym $mod+u fullscreen toggle
@@ -49,35 +60,51 @@ bindsym $mod+space floating toggle
 bindsym $mod+Shift+r restart
 
 #take simple screenshot
-bindsym --release Print exec --no-startup-id ~/Scripts/screenshot.sh
+bindsym --release $mod+t exec --no-startup-id ~/Scripts/screenshot.sh
 
 #take selected screenshot
-bindsym --release $mod+Print exec --no-startup-id ~/Scripts/sscreenshot.sh
+bindsym --release $mod+Shift+t exec --no-startup-id ~/Scripts/sscreenshot.sh
 
 # Open scripts
 bindsym $mod+j exec ~/Scripts/checklist/checklist.sh
 
+# Use the mouse
+bindsym $mod+Up exec xdotool mousemove_relative -- 0 -20
+bindsym $mod+Down exec xdotool mousemove_relative -- 0 +20
+bindsym $mod+Right exec xdotool mousemove_relative -- +20 0
+bindsym $mod+Left exec xdotool mousemove_relative -- -20 0
+
+bindsym $mod+Home exec xdotool click 1
+bindsym $mod+Next exec xdotool click 4
+bindsym $mod+Prior exec xdotool click 5
+bindsym $mod+End exec xdotool click 3
+ 
 # change focus
-bindsym $mod2+r focus left
-bindsym $mod2+t focus down
-bindsym $mod2+n focus up
-bindsym $mod2+s focus right
+bindsym $mod+r focus left
+bindsym $mod+t focus down
+bindsym $mod+n focus up
+bindsym $mod+s focus right
 
 bindsym $mod+Tab focus down
 bindsym $mod+Shift+Tab focus up
 
+#hide window
+#bindsym $mod+Shift+space hide
+
 # change position
-bindsym $mod2+g move left
-bindsym $mod2+c move down
-bindsym $mod2+h move up
-bindsym $mod2+l move right
+bindsym $mod+g move left
+bindsym $mod+c move down
+bindsym $mod+h move up
+bindsym $mod+l move right
 
 # toggle sticky windows
 bindsym $mod+a sticky toggle
 
 bindsym $mod+i focus parent
 
+workspace 2 output primary
 # set workspace in screens
+workspace esc output HDMI-A-0
 workspace  1 output HDMI-A-0 
 workspace  2 output HDMI-A-0 
 workspace  3 output HDMI-A-0 
@@ -90,6 +117,7 @@ workspace F4 output DisplayPort-0
 workspace F5 output DisplayPort-0
 
 # switch to workspace
+bindsym $mod+Escape  workspace esc
 bindsym $mod+1  workspace 1
 bindsym $mod+2  workspace 2
 bindsym $mod+3  workspace 3
@@ -102,6 +130,7 @@ bindsym $mod+F4 workspace F4
 bindsym $mod+F5 workspace F5
 
 # move to workspace
+bindsym $mod+Shift+esc  move container to workspace Escape
 bindsym $mod+Shift+1  move container to workspace 1
 bindsym $mod+Shift+2  move container to workspace 2
 bindsym $mod+Shift+3  move container to workspace 3
