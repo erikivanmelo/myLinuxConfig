@@ -25,7 +25,7 @@ alias i='sudo pacman -S --needed'
 alias ui='sudo pacman -Rsc'
 alias pm='sudo pamac-manager'
 alias pi='sudo pamac install'
-alias pu='sudo pamac update'
+alias pu='sudo pamac update --needed --overwrite "*" --noconfirm'
 
 #cd
 alias ..='cd ..'
@@ -44,12 +44,13 @@ alias screenshot='cd ~/Pictures/Screenshots'
 alias conf='~/.config'
 alias work='cd ~/Work/msi/www7; v'
 
-#nvim
+#conf
 alias bashrc='nvim ~/.bashrc'
 alias aliases='nvim ~/.aliases'
 alias vrc='nvim -p ~/.vimrc ~/.vim/plugins.vim ~/.vim/maps.vim'
 alias vplugins='nvim ~/.vim/plugins.vim'
 alias vmaps='nvim ~/.vim/maps.vim'
+alias i3conf='nvim ~/.config/i3/config'
 
 alias hosts='sudo nvim /etc/hosts'
 

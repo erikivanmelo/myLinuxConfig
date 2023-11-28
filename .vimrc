@@ -22,6 +22,11 @@ set autoread
 set tags=./tags,tags;$HOME
 set noincsearch
 
+let g:cpp_compiler_options = '-std=c++17'
+
+" Establece las opciones de compilación.
+let $CXXFLAGS = g:cpp_compiler_options
+
 " Guarda la ultima posicion del buffer, para que cuanodo vuelvas no quedes al principio
 autocmd BufEnter * silent! normal! g`"
 " Guarda la ulitam posicion del buffer, para cuando vuelval a ingresar al archivo

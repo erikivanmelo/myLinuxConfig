@@ -32,10 +32,8 @@ Plug 'sirver/ultisnips'                   " Motor de snippets para facilitar la 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}  " Completado automático avanzado y más para múltiples lenguajes.
 Plug 'bmewburn/intelephense-docs'         " Documentación para el servidor Intelephense (PHP).
 
-Plug 'jackmort/chatgpt.nvim'						 " Integración con ChatGPT para sugerencias de código.
-
 " test
-Plug 'vim-syntastic/syntastic'           " Verificación de sintaxis y linter para varios lenguajes.
+"Plug 'vim-syntastic/syntastic'           " Verificación de sintaxis y linter para varios lenguajes.
 
 " IDE
 Plug 'editorconfig/editorconfig-vim'       " Soporte para archivos de configuración .editorconfig.

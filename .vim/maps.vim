@@ -52,7 +52,9 @@ inoremap <expr> <End> coc#pum#visible()? coc#pum#confirm() : '<End>'
 "search
 nnoremap <leader>ff :FZF<cr>
 nnoremap <leader>fc :Rg<cr>
+
 nnoremap <leader>fg :BLines<cr>
+vnoremap <leader>fg y:BLines<cr><C-S-V>
 
 inoremap <C-f> <Esc>/
 nnoremap <C-f> /
@@ -66,6 +68,9 @@ inoremap <F3> <Esc>:set hlsearch!<CR>i<Right>
 inoremap <C-M-f> <Esc>:%s///gc<Left><Left><Left><Left>
 nnoremap <C-M-f> :%s///gc<Left><Left><Left><Left>
 vnoremap <C-M-f> y:%s/<C-R>"//gc<Left><Left><Left>
+
+vnoremap <leader>q ciw'<C-R>"'
+
 
 "delete
 nnoremap <C-Del> dw
