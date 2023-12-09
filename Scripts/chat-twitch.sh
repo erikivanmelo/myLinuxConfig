@@ -1,0 +1,2 @@
+#alacritty -o font.size=7 -e ~/portable/twitch-chat/ttchat --accounts  "username=alpe3uwu;user_id=55869786;client_id=j1i10vfts1iy5p43v8pipr6brg2u3q;oauth_token=ibiofig01id39enhrukyqe1nzusoew" --channels "alpe3uwu"
+alacritty -o font.size=8 -e ~/portable/ttchat/ttchat --channel alpe3uwu
