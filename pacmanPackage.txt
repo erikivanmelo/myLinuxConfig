@@ -14,6 +14,11 @@ feh
 brave-browser
 i3
 rofi
+gimp
+qbittorrent
+audacity
+handbrake
+gparted
 dmenu
 pavucontrol
 pcmanfm
