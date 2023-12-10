@@ -78,7 +78,7 @@ echo "establezca una contraseña"
 passwd
 
 echo "bootloader instalation"
-pacman -S grub efibootmgr
+pacman -S grub efibootmgr networkmanager git 
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
@@ -87,6 +87,8 @@ useradd "-m -G wheel -s /bin/bash $name"
 
 echo "establezca una contraseña de usuario"
 passwd ${name}
+
+echo "$name ALL=(ALL) ALL" | sudo EDITOR='tee -a' visudo
 
 echo "KEYMAP=es" | sudo tee -a /etc/vconsole.conf
 
