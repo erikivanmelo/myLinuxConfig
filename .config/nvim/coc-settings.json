@@ -1,0 +1,4 @@
+{
+  "snippets.ultisnips.pythonPrompt": false,
+  "clangd.fallbackFlags": [ "-std=c++17" ]
+}
