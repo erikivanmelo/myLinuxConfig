@@ -57,6 +57,7 @@ bindsym $mod+u fullscreen toggle
 bindsym $mod+space floating toggle
 
 bindsym $mod+w bar mode toggle
+bindsym $mod+Shift+w bar mode toggle
 
 #restart i3 interface
 bindsym $mod+Shift+r restart
@@ -154,10 +155,13 @@ bindsym $mod+o layout toggle stacking split
 # finds out, if available)
 
 bar {
-#HERE WAS "tray_output primary"
-status_command i3status
-position bottom
-tray_output primary
-font pango:DejaVu Sans Mono 10
-separator_symbol |
+	#HERE WAS "tray_output primary"
+	status_command i3status
+	position bottom
+	tray_output primary
+	font pango:DejaVu Sans Mono 10
+	separator_symbol |
+	mode hide
+	hidden_state hide
+	modifier Mod1
 }
