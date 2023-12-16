@@ -26,14 +26,16 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
+bindsym $mod+XF86AudioRaiseVolume exec --no-startup-id ~/Scripts/ruidoBlanco.sh volumeUp 3
+bindsym $mod+XF86AudioLowerVolume exec --no-startup-id ~/Scripts/ruidoBlanco.sh volumeDown 3
+bindsym $mod+XF86AudioPlay exec --no-startup-id ~/Scripts/ruidoBlanco.sh toggle
+
 bindsym XF86AudioNext exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
 bindsym XF86AudioPrev exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous
 bindsym XF86AudioPlay exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
 bindsym XF86AudioPause exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Pause
 
 bindsym XF86Tools exec --no-startup-id ~/Scripts/switchsound.sh
-
-bindsym $mod+XF86AudioPlay exec --no-startup-id spotify-launcher
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -163,5 +165,5 @@ bar {
 	separator_symbol |
 	mode hide
 	hidden_state hide
-	modifier Mod1
+	modifier none
 }
