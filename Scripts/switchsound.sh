@@ -4,8 +4,8 @@
 current_sink=$(pactl info | grep "Default Sink" | awk '{print $3}')
 
 # Definir los nombres de las salidas de audio entre las que quieres cambiar
-output1="bluez_output.20_20_12_30_30_EE.1"
-output2="alsa_output.pci-0000_2a_00.6.analog-stereo"
+output1="bluez_sink.20_20_12_30_30_EE.a2dp_sink"
+output2="alsa_output.pci-0000_00_1b.0.analog-stereo"
 
 # Función para cambiar la salida de audio
 toggle_audio_output() {
