@@ -71,7 +71,7 @@ bindsym --release $mod+t exec --no-startup-id ~/Scripts/screenshot.sh
 bindsym --release $mod+Shift+t exec --no-startup-id ~/Scripts/sscreenshot.sh
 
 # Open scripts
-bindsym $mod+j exec ~/Scripts/checklist/checklist.sh
+bindsym $mod+j exec ~/Scripts/checklist.sh
 
 # Use the mouse
 bindsym $mod+Up exec xdotool mousemove_relative -- 0 -20
