@@ -1,4 +1,4 @@
-fileName=ruidoBlanco.mp3
+fileName=~/Scripts/ruidoBlanco.mp3
 socket=/tmp/mpv_socket_ruidoBlanco
 case $1 in
 
@@ -7,7 +7,7 @@ case $1 in
         if [[ -S "$socket" ]]; then
             echo "el socket ya existe"
         else
-            mpv --no-terminal "--input-ipc-server=$socket" "$fileName" &
+            mpv --loop --no-terminal "--input-ipc-server=$socket" "$fileName" &
             echo se ejecuta
             exit
         fi
