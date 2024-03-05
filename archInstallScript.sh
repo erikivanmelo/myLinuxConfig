@@ -78,9 +78,11 @@ echo "establezca una contraseña"
 passwd
 
 echo "bootloader instalation"
-pacman -S grub efibootmgr networkmanager git 
+pacman -S grub efibootmgr networkmanager git sudo
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub
 grub-mkconfig -o /boot/grub/grub.cfg
+
+sudo systemctl enable NetworkManager
 
 read -p "Escriba un userName: " name
 useradd "-m -G wheel -s /bin/bash $name"
