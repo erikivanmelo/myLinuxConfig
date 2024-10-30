@@ -17,7 +17,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
 
-exec --no-startup-id feh --bg-scale ~/Pictures/wallpaper/background.jpg --bg-scale ~/Pictures/wallpaper/vertical.png
+exec --no-startup-id feh --bg-scale ~/Pictures/wallpaper/background.jpg --bg-scale ~/Pictures/wallpaper/login.png
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -29,6 +29,9 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 bindsym $mod+XF86AudioRaiseVolume exec --no-startup-id ~/Scripts/ruidoBlanco.sh volumeUp 3
 bindsym $mod+XF86AudioLowerVolume exec --no-startup-id ~/Scripts/ruidoBlanco.sh volumeDown 3
 bindsym $mod+XF86AudioPlay exec --no-startup-id ~/Scripts/ruidoBlanco.sh toggle
+
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set 1%+
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 1%-
 
 bindsym XF86AudioNext exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
 bindsym XF86AudioPrev exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous
@@ -47,9 +50,8 @@ bindsym $mod+Return exec alacritty
 bindsym $mod+period kill
 
 # start rufi (a program launcher)
-bindsym $mod+p exec --no-startup-id rofi -combi-modi drun -theme /home/ivan/myLinuxConfig/rofi/rounded-blue-dark -font "hack 13" -show combi -display-combi "Ejecutar:" disable-history true -sorting-method "normal" -sort true -display-drun "" -config -icon-theme "Papirus" -show-icons -combi-display-format "{text} {mode}" -no-levenshtein-sort
+bindsym $mod+p exec --no-startup-id rofi -combi-modi drun -theme ~/myLinuxConfig/rofi/rounded-blue-dark -font "hack 13" -show combi -display-combi "Ejecutar:" disable-history true -sorting-method "normal" -sort true -display-drun "" -config -icon-theme "Papirus" -show-icons -combi-display-format "{text} {mode}" -no-levenshtein-sort
 
-#bindsym $mod+p exec --no-startup-id rofi -combi-modi drun -theme /home/ivan/tmp/rofi/files/launchers/type-2/style-10.rasi -font "hack 13" -show combi -display-combi "Ejecutar:" disable-history true -sorting-method "normal" -sort true -display-drun "" -config -icon-theme "Papirus" -show-icons -combi-display-format "{text} {mode}" -no-levenshtein-sort
 bindsym $mod+Shift+p exec --no-startup-id ~/Scripts/$(ls ~/Scripts/ | dmenu) 
 
 #toggle fullscrean
@@ -107,12 +109,12 @@ bindsym $mod+a sticky toggle
 
 bindsym $mod+i focus parent
 
-set $screen2 HDMI-1
-set $screen1 eDP-1
+set $screen1 HDMI-1
+set $screen2 eDP-1
 
 workspace 2 output primary
 # set workspace in screens
-workspace esc output $screen1
+workspace esc output $screen2
 workspace  1 output $screen1 
 workspace  2 output $screen1 
 workspace  3 output $screen1 
