@@ -7,7 +7,7 @@ general {
 }
 
 order += "disk /"
-order += "disk /home/ivan/"
+order += "disk /home/dai/"
 order += "volume master"
 order += "memory"
 order += "cpu_usage"
@@ -23,7 +23,7 @@ disk "/" {
     #separator_block_width = 1
 }
 
-disk "/home/ivan/" {
+disk "/home/dai/" {
     format = "🏠 %avail"
     #align = "left"
     #min_width = 100
@@ -54,14 +54,14 @@ cpu_usage{
 
 cpu_temperature 0{
         format = "%degrees °C"
-        path = "/sys/class/hwmon/hwmon0/device/hwmon/hwmon0/temp1_input"
+        path = "/sys/class/hwmon/hwmon1/temp1_input"
 }
 
 
 
 battery 0 {
 	last_full_capacity = true
-        format = "%status %percentage"
+        format = "%status %percentage %remaining"
         format_down = ""
         status_chr = ""
         status_bat = ""
