@@ -163,7 +163,7 @@ bar {
 	status_command i3status
 	position bottom
 	tray_output primary
-	font pango:DejaVu Sans Mono 10
+	font pango:DejaVu Sans Mono 14
 	separator_symbol |
 	mode hide
 	hidden_state hide
