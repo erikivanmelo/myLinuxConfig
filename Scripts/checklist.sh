@@ -4,6 +4,10 @@ theEndBase=false;
 #The lists folder
 base="$HOME/Documents/Notes/checklists"
 
+if [ ! -d $base ]; then
+	mkdir $base
+fi
+
 while [[ $theEndBase == false ]]; do
 	file="`ls $base | dmenu -i -l 100 `"
 	contentBase=`ls $base`

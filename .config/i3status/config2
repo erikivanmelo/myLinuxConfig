@@ -1,0 +1,16 @@
+order += "resources_monitor"
+order += "space root"
+order += "space home"
+order += "ping"
+
+space root {
+    display = 1
+    name = "🖴 "
+    partition = "/"
+}
+
+space home {
+    display = 1
+    name = "🏠"
+    partition = "/home/dai/"
+}

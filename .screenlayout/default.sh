@@ -1,5 +1,4 @@
 #!/bin/sh
-xrandr --addmode HDMI-A-0 1920x1080
-xrandr --output HDMI-A-0 --primary --mode 1920x1080 --rate 60 --pos 0x0 --rotate normal --output DisplayPort-0 --mode 1366x768 --rate 60 --pos 1920x0 --rotate left
-xrandr --output HDMI-A-0 --gamma 1.6:1.6:1.2 --brightness 1
-#xrandr --dpi 276 --fb  --output HDMI-A-0 --primary --mode 1920x1080 --rate 60 --pos 0x0 --rotate normal --output DVI-D-0 --off --output DisplayPort-0 --mode 1366x768 --rate 60 --pos 1920x0 --rotate left
+xrandr --output eDP-1 --scale 0.8x0.8 --mode 1680x1050 --pos 0x240 --rotate normal --output HDMI-1 --primary --mode 1920x1080 --pos 1344x0 --rotate normal --output DP-1 --off --output DP-2 --off --output DP-3 --off --output DP-4 --off
+feh --bg-scale ~/Pictures/wallpaper/background.jpg --bg-scale ~/Pictures/wallpaper/login.png
+xinput map-to-output "ELAN9004:00 04F3:4348" "eDP-1"

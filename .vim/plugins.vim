@@ -8,6 +8,11 @@ Plug 'nvim-tree/nvim-web-devicons'         " Agrega iconos a la vista del árbol
 " syntax
 Plug 'sheerun/vim-polyglot'                 " Mejora la resaltación de sintaxis para una variedad de lenguajes.
 Plug 'norcalli/nvim-colorizer.lua'          " Resalta los códigos de color en tiempo real en tus archivos.
+Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-treesitter/nvim-treesitter-refactor'
+
+Plug 'kevinhwang91/nvim-ufo', {'do': 'cd after/plugin && npm install'}
+Plug 'kevinhwang91/promise-async'
 
 " status bar
 Plug 'dense-analysis/ale'
@@ -41,7 +46,8 @@ Plug 'junegunn/fzf'                        " Búsqueda rápida y filtrado de arc
 Plug 'junegunn/fzf.vim'                    " Integración de FZF con Neovim.
 Plug 'terryma/vim-multiple-cursors'        " Selección y edición simultánea de múltiples instancias de texto.
 Plug 'mhinz/vim-signify'                   " Muestra los cambios Git en el margen.
-Plug 'yggdroot/indentline'                 " Muestra líneas verticales de indentación.
+"Plug 'yggdroot/indentline'                 " Muestra líneas verticales de indentación.
+Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'scrooloose/nerdcommenter'            " Comentado y descomentado rápido de código.
 
 " rastreo
@@ -51,6 +57,8 @@ Plug 'wakatime/vim-wakatime'               " Seguimiento del tiempo que pasas en
 Plug 'lewis6991/impatient.nvim'            " Carga más rápida de Neovim al abrir archivos grandes.
 
 Plug 'neovim/nvim-lspconfig'
+Plug 'williamboman/mason.nvim'
+Plug 'williamboman/mason-lspconfig.nvim'
 
 " git
 Plug 'sindrets/diffview.nvim'              " Visualización de diferencias Git.
@@ -68,5 +76,9 @@ Plug 'majutsushi/tagbar'                  " Visualización de estructura de cód
 " Plug 'puremourning/vimspector'            " Depurador para Neovim.
 
 Plug 'tpope/vim-dispatch'
+
+" Agregar a tu archivo de configuración de Neovim
+"Plug 'nvim-telescope/telescope.nvim', {'do': ':UpdateRemotePlugins'}
+
 
 call plug#end()

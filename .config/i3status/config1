@@ -1,0 +1,24 @@
+order += "volume master"
+order += "battery pc"
+order += "mytime"
+
+
+volume master {
+        format = "🔊 %volume"
+        format_muted = "🔊⃠ (%volume)"
+        device = "default"
+        mixer = "Master"
+        mixer_idx = 0
+}
+
+battery pc{
+	last_full_capacity = true
+        format = "%status %percentage %remaining"
+        format_down = ""
+        status_chr = ""
+        status_bat = ""
+        status_unk = ""
+        status_full = ""
+        path = "/sys/class/power_supply/BAT0/uevent"
+        low_threshold = 15
+}

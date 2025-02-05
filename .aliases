@@ -20,9 +20,9 @@ alias l='ls -CF'
 #alias purge='sudo apt-fast purge'
 #alias reinstall='sudo apt-fast install --reinstall'
 
-alias u='sudo pacman -Syu'
-alias i='sudo pacman -S --needed'
-alias ui='sudo pacman -Rsc'
+alias u='yay -Syu --needed'
+alias i='yay -S --needed'
+alias ui='yay -Rns'
 alias pm='sudo pamac-manager'
 alias pi='sudo pamac install'
 alias pu='sudo pamac update --needed --overwrite "*" --noconfirm'
@@ -42,7 +42,6 @@ alias downloads='cd ~/Downloads'
 alias games='cd ~/Games'
 alias screenshot='cd ~/Pictures/Screenshots'
 alias conf='~/.config'
-alias work='cd ~/Work/msi/www7; v'
 
 #conf
 alias bashrc='nvim ~/.bashrc'
@@ -88,5 +87,12 @@ alias qmkc='qmk compile -kb ~/myLinuxConfig/qmk_firmware/keyboards/keychron/v1/a
 alias qmkf='qmk flash  ~/myLinuxConfig/qmk_firmware/keychron_v1_ansi_encoder_melokey.bin'
 alias melokeys='v ~/myLinuxConfig/melokey/keymap.c'
 
+#others
 alias vdw="xdotool key --repeat $1 122"
 alias vup="xdotool key --repeat $1 123"
+ 
+#work
+alias py="python"
+alias venv="source venv/bin/activate"
+alias pipi='pip install'
+alias of='cd /home/dai/obviousFuture'

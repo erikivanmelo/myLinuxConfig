@@ -14,6 +14,8 @@ nnoremap gp   :!git pull<cr>
 nnoremap gP   :!git push<cr>
 nnoremap gC	  :!git checkout
 nnoremap gm	  :!git merge
+nnoremap gg   :diffget<cr>
+nnoremap gG   :diffput<cr>
 nnoremap <F6> :DiffviewOpen<cr>
 inoremap <F6> <Esc>:DiffviewOpen<cr>
 nnoremap <leader><F6> :DiffviewClose<cr>
@@ -51,6 +53,7 @@ inoremap <expr> <End> coc#pum#visible()? coc#pum#confirm() : '<End>'
 
 "search
 nnoremap <leader>ff :FZF<cr>
+
 nnoremap <leader>fc :Rg<cr>
 
 nnoremap <leader>fg :BLines<cr>
@@ -63,6 +66,8 @@ vnoremap / y/<C-R>"
 
 nnoremap <F3> :set hlsearch!<CR>
 inoremap <F3> <Esc>:set hlsearch!<CR>i<Right>
+
+nnoremap <leader>nr :set relativenumber!<CR>
 
 "replace text
 inoremap <C-M-f> <Esc>:%s///gc<Left><Left><Left><Left>
@@ -118,6 +123,10 @@ function! TabClose()
 	endif
 endfunction
 
+
+unmap <C-W><C-D>
+unmap <C-W>d
+
 inoremap <C-w> <Esc>:Tabclose<CR>i
 nnoremap <C-w> :Tabclose<CR>
 
@@ -169,5 +178,6 @@ nnoremap <F5> :e<CR>
 inoremap <F5> i:e<CR><right>i
 
 nnoremap qq :q!<CR> 
+
 
 " nnoremap <C-b> :g/.*\n^{/yank A<cr>:bn<cr>pkdd:%s/$/;/<cr>:g/::/d B<cr>A<cr><cr>class <cr>{<cr>};<esc>"BP:%s/[^ ]\+:://<cr>j%jyt(kk$p=ipjA<cr>public:<esc>
