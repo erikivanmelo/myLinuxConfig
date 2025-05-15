@@ -23,6 +23,9 @@ Plug 'shinchu/lightline-gruvbox.vim'       " Tema de barra de estado que combina
 " files management
 Plug 'scrooloose/nerdtree'                 " Gestión de archivos y directorios en un árbol de navegación.
 Plug 'nvim-lua/plenary.nvim'               " Dependencia para plugins de Lua.
+Plug 'kevinhwang91/rnvimr'
+
+Plug 'chipsenkbeil/distant.nvim'
 
 " typing
 Plug 'alvan/vim-closetag'                 " Cierra automáticamente etiquetas HTML y XML.
@@ -44,14 +47,22 @@ Plug 'bmewburn/intelephense-docs'         " Documentación para el servidor Inte
 Plug 'editorconfig/editorconfig-vim'       " Soporte para archivos de configuración .editorconfig.
 Plug 'junegunn/fzf'                        " Búsqueda rápida y filtrado de archivos y directorios.
 Plug 'junegunn/fzf.vim'                    " Integración de FZF con Neovim.
-Plug 'terryma/vim-multiple-cursors'        " Selección y edición simultánea de múltiples instancias de texto.
+Plug 'mg979/vim-visual-multi'             "Selección y edición simultánea de múltiples instancias de texto.
 Plug 'mhinz/vim-signify'                   " Muestra los cambios Git en el margen.
 "Plug 'yggdroot/indentline'                 " Muestra líneas verticales de indentación.
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'scrooloose/nerdcommenter'            " Comentado y descomentado rápido de código.
-
+"Plug 'nvim-pack/nvim-spectre'
+"Plug 'akinsho/bufferline.nvim'
+Plug 'folke/noice.nvim'
+"Plug 'rcarriga/nvim-notify'
+Plug 'MunifTanjim/nui.nvim'
 " rastreo
 Plug 'wakatime/vim-wakatime'               " Seguimiento del tiempo que pasas en proyectos de desarrollo.
+Plug 'kshenoy/vim-signature'
+Plug 'tpope/vim-abolish'
+
+Plug 'xiyaowong/transparent.nvim'
 
 " speed
 Plug 'lewis6991/impatient.nvim'            " Carga más rápida de Neovim al abrir archivos grandes.

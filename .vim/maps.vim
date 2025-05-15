@@ -6,83 +6,81 @@ imap <ESC>[8~    <End>
 imap <ESC>[7~    <Home>
 
 "git
-nnoremap <F1> :GitBlame<CR>
-inoremap <F1> <Right><Esc>:GitBlame<CR>i
+nnoremap <silent> <F1> :GitBlame<CR>
+inoremap <silent> <F1> <Right><Esc>:GitBlame<CR>i
 nnoremap gc   :!git commit -m ""<left>
 nnoremap ga   :!git add
-nnoremap gp   :!git pull<cr>
-nnoremap gP   :!git push<cr>
+nnoremap <silent> gp   :!git pull<cr>
+nnoremap <silent> gP   :!git push<cr>
 nnoremap gC	  :!git checkout
 nnoremap gm	  :!git merge
-nnoremap gg   :diffget<cr>
-nnoremap gG   :diffput<cr>
-nnoremap <F6> :DiffviewOpen<cr>
-inoremap <F6> <Esc>:DiffviewOpen<cr>
-nnoremap <leader><F6> :DiffviewClose<cr>
+nnoremap <silent> gg   :diffget<cr>
+nnoremap <silent> gG   :diffput<cr>
+nnoremap <silent> <F6> :DiffviewOpen<cr>
+inoremap <silent> <F6> <Esc>:DiffviewOpen<cr>
+nnoremap <silent> <leader><F6> :DiffviewClose<cr>
 
 "go to definition
-inoremap <F2> <Esc><Plug>(coc-definition)<Esc>i
-nnoremap <F2> <Plug>(coc-definition)
+inoremap <silent> <F2> <Esc><Plug>(coc-definition)<Esc>i
+nnoremap <silent> <F2> <Plug>(coc-definition)
 
 "horizontal split
-nnoremap <F4> :vsplit<CR>
-inoremap <F4> <Esc>:vsplit<CR>i
+nnoremap <silent> <F4> :vsplit<CR>
+inoremap <silent> <F4> <Esc>:vsplit<CR>i
 
 "text navigation
-nnoremap <M-Up> :m-2<CR>
-nnoremap <M-Down> :m+<CR>
-inoremap <M-Up> <Esc>:m-2<CR>i<Right>
-inoremap <M-Down> <Esc>:m+<CR>i<Right>
+nnoremap <silent> <M-Up> :m-2<CR>
+nnoremap <silent> <M-Down> :m+<CR>
+inoremap <silent> <M-Up> <Esc>:m-2<CR>i<Right>
+inoremap <silent> <M-Down> <Esc>:m+<CR>i<Right>
 
-vnoremap <PageUp> 10<Up> 
-vnoremap <PageDown> 10<Down> 
+vnoremap <silent> <PageUp> 10<Up> 
+vnoremap <silent> <PageDown> 10<Down> 
 
-nnoremap <PageUp> 10<Up>
-nnoremap <PageDown> 10<Down>
+nnoremap <silent> <PageUp> 10<Up>
+nnoremap <silent> <PageDown> 10<Down>
 
-inoremap <PageUp> <Esc>10<Up>i
-inoremap <PageDown> <Esc>10<Down>i
+inoremap <silent> <PageUp> <Esc>10<Up>i
+inoremap <silent> <PageDown> <Esc>10<Down>i
 
-nnoremap <M-Left> <C-O>
-nnoremap <M-Right> <C-I>
+nnoremap <silent> <M-Left> <C-O>
+nnoremap <silent> <M-Right> <C-I>
 
-nnoremap <C-Home> gg
-nnoremap <C-End> G
+nnoremap <silent> <C-Home> gg
+nnoremap <silent> <C-End> G
 
-inoremap <expr> <End> coc#pum#visible()? coc#pum#confirm() : '<End>'
+inoremap <silent> <expr> <End> coc#pum#visible()? coc#pum#confirm() : '<End>'
 
 "search
-nnoremap <leader>ff :FZF<cr>
+nnoremap <silent> <leader>ff :FZF<cr>
 
-nnoremap <leader>fc :Rg<cr>
+nnoremap <silent> <leader>fc :Rg<cr>
 
-nnoremap <leader>fg :BLines<cr>
-vnoremap <leader>fg y:BLines<cr><C-S-V>
+nnoremap <silent> <leader>fg :BLines<cr>
+vnoremap <silent> <leader>fg y:BLines<cr><C-S-V>
 
 inoremap <C-f> <Esc>/
 nnoremap <C-f> /
 vnoremap <C-f> y/<C-R>"
 vnoremap / y/<C-R>"
 
-nnoremap <F3> :set hlsearch!<CR>
-inoremap <F3> <Esc>:set hlsearch!<CR>i<Right>
+nnoremap <silent> <F3> :set hlsearch!<CR>
+inoremap <silent> <F3> <Esc>:set hlsearch!<CR>i<Right>
 
-nnoremap <leader>nr :set relativenumber!<CR>
+nnoremap <silent> <leader>nr :set relativenumber!<CR>
 
 "replace text
 inoremap <C-M-f> <Esc>:%s///gc<Left><Left><Left><Left>
 nnoremap <C-M-f> :%s///gc<Left><Left><Left><Left>
 vnoremap <C-M-f> y:%s/<C-R>"//gc<Left><Left><Left>
 
-vnoremap <leader>q ciw'<C-R>"'
-
 
 "delete
-nnoremap <C-Del> dw
-nnoremap <C-Backspace> bdw
-vnoremap <Del> "_d
-nnoremap <Del> "_<Del>
-nnoremap <Backspace> X
+nnoremap <silent> <C-Del> dw
+nnoremap <silent> <C-Backspace> bdw
+vnoremap <silent> <Del> "_d
+nnoremap <silent> <Del> "_<Del>
+nnoremap <silent> <Backspace> X
 
 command! W call W()
 function! W()
@@ -97,16 +95,19 @@ function! W()
 endfunction
 
 "save
-inoremap <C-s> <Esc>:W<CR>
-nnoremap <C-s> :W<CR>
+inoremap <silent> <C-s> <Esc>:W<CR>
+nnoremap <silent> <C-s> :W<CR>
 
 " tmux svigator
-nnoremap <C-g> :TmuxNavigateLeft<cr>
-inoremap <C-g> <Esc>:TmuxNavigateLeft<cr>i
-"nnoremap <C-c> :TmuxNavigateDown<cr>
-"nnoremap <C-h> :TmuxNavigateUp<cr>
-nnoremap <C-l> :TmuxNavigateRight<cr>
-inoremap <C-l> <Esc>:TmuxNavigateRight<cr>i
+nnoremap <silent> <C-g> :TmuxNavigateLeft<cr>
+inoremap <silent> <C-g> <Esc>:TmuxNavigateLeft<cr>i
+
+nnoremap <silent> <C-c> :TmuxNavigateDown<cr>
+
+nnoremap <silent> <C-h> :TmuxNavigateUp<cr>
+
+nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
+inoremap <silent> <C-l> <Esc>:TmuxNavigateRight<cr>i
 
 command! Tabclose call TabClose()
 function! TabClose()
@@ -127,57 +128,59 @@ endfunction
 unmap <C-W><C-D>
 unmap <C-W>d
 
-inoremap <C-w> <Esc>:Tabclose<CR>i
-nnoremap <C-w> :Tabclose<CR>
+inoremap <silent> <C-w> <Esc>:Tabclose<CR>i
+nnoremap <silent> <C-w> :Tabclose<CR>
 
 " tabs and tree
-nnoremap <Leader>tr :tabp<CR>
-inoremap <C-t> <Esc>:tabnew<CR>i
-nnoremap <C-t> :tabnew<CR>
-nnoremap <Leader>ts :tabn<cr>
-nnoremap <F7> :NERDTreeToggle<cr>
-inoremap <F7> <Esc>:NERDTreeToggle<cr>
+nnoremap <silent> <Leader>tr :tabp<CR>
+inoremap <silent> <C-t> <Esc>:tabnew<CR>i
+nnoremap <silent> <C-t> :tabnew<CR>
+nnoremap <silent> <Leader>ts :tabn<cr>
+nnoremap <silent> <F7> :NERDTreeToggle<cr>
+inoremap <silent> <F7> <Esc>:NERDTreeToggle<cr>
+nnoremap <silent> ff :RnvimrToggle<cr>
 
 " tab navigation
 for i in range(1, 9)
 	let key = "\<M-".i.">"
-	execute 'nnoremap ' . key . ' :tabn '.i.'<CR>'
-	execute 'inoremap ' . key . ' <Esc>:tabn '.i.'<CR>i'
-	execute 'vnoremap ' . key . ' <Esc>:tabn '.i.'<CR>'
+	execute 'nnoremap <silent> ' . key . ' :tabn '.i.'<CR>'
+	execute 'inoremap <silent> ' . key . ' <Esc>:tabn '.i.'<CR>i'
+	execute 'vnoremap <silent> ' . key . ' <Esc>:tabn '.i.'<CR>'
 endfor
 
-nnoremap <Leader>b :Buffers<cr>
+nnoremap <silent> <Leader>b :Buffers<cr>
 
-nnoremap <Leader><C-t> :new tab<cr>
-nnoremap <Leader><C-w> :bd<cr>
+nnoremap <silent> <Leader><C-t> :new tab<cr>
+nnoremap <silent> <Leader><C-w> :bd<cr>
 
 " checklist
-nnoremap <leader>ct :ChecklistToggleCheckbox<cr>
-nnoremap <leader>ce :ChecklistEnableCheckbox<cr>
-nnoremap <leader>cd :ChecklistDisableCheckbox<cr>
+nnoremap <silent> <leader>ct :ChecklistToggleCheckbox<cr>
+nnoremap <silent> <leader>ce :ChecklistEnableCheckbox<cr>
+nnoremap <silent> <leader>cd :ChecklistDisableCheckbox<cr>
 
-vnoremap <leader>ct :ChecklistToggleCheckbox<cr>
-vnoremap <leader>ce :ChecklistEnableCheckbox<cr>
-vnoremap <leader>cd :ChecklistDisableCheckbox<cr>
+vnoremap <silent> <leader>ct :ChecklistToggleCheckbox<cr>
+vnoremap <silent> <leader>ce :ChecklistEnableCheckbox<cr>
+vnoremap <silent> <leader>cd :ChecklistDisableCheckbox<cr>
 
-inoremap <C-D> <C-W>
+inoremap <silent> <C-D> <C-W>
 
 " Seleccionar todo el archivo
-nnoremap <C-a> ggVG
+nnoremap <silent> <C-a> ggVG
 
 " others
-nnoremap <F12> i
-vnoremap <F12> <Esc>
-inoremap <F12> <Right><Esc>
+nnoremap <silent> <F12> i
+vnoremap <silent> <F12> <Esc>
+inoremap <silent> <F12> <Right><Esc>
 
-nnoremap <F11> <plug>NERDCommenterToggle
-vnoremap <F11> <plug>NERDCommenterToggle
-inoremap <F11> <Esc><plug>NERDCommenterToggle i
+nnoremap <silent> <F11> <plug>NERDCommenterToggle
+vnoremap <silent> <F11> <plug>NERDCommenterToggle
+inoremap <silent> <F11> <Esc><plug>NERDCommenterToggle i
 
-nnoremap <F5> :e<CR>
-inoremap <F5> i:e<CR><right>i
+nnoremap <silent> <F5> :e<CR>
+inoremap <silent> <F5> i:e<CR><right>i
 
-nnoremap qq :q!<CR> 
+nnoremap <silent> qq :q!<CR> 
 
+nnoremap <silent> <C-u> <C-r>
 
-" nnoremap <C-b> :g/.*\n^{/yank A<cr>:bn<cr>pkdd:%s/$/;/<cr>:g/::/d B<cr>A<cr><cr>class <cr>{<cr>};<esc>"BP:%s/[^ ]\+:://<cr>j%jyt(kk$p=ipjA<cr>public:<esc>
+ "nnoremap <silent> <C-b> :g/.*\n^{/yank A<cr>:bn<cr>pkdd:%s/$/;/<cr>:g/::/d B<cr>A<cr><cr>class <cr>{<cr>};<esc>"BP:%s/[^ ]\+:://<cr>j%jyt(kk$p=ipjA<cr>public:<esc>

@@ -22,6 +22,11 @@ set autoread
 set tags=./tags,tags;$HOME
 set noincsearch
 
+highlight Visual ctermfg=NONE ctermbg=blue guifg=NONE guibg=blue
+
+let g:rnvimr_enable_ex = 1
+let g:rnvimr_enable_picker = 1
+
 let g:python3_host_prog = '/usr/bin/python3'
 let g:cpp_compiler_options = '-std=c++17'
 
@@ -63,7 +68,7 @@ let g:lightline = {
         \ 'left': [
             \ ['mode', 'paste'],
             \ [],
-            \ ['relativepath', 'tagbar', 'modified']
+            \ ['relativepath', 'modified']
         \ ],
         \ 'right': [
             \ ['kitestatus'],
@@ -82,7 +87,6 @@ let g:lightline = {
     \ 'component': {
         \ 'bufnum': '%n',
         \ 'inactive': 'inactive',
-        \ 'tagbar': '%{substitute(tagbar#currenttag("%s", "", "f"), "\\", ":", "g")}',
         \ 'filesize': '%{FileSize()}',
     \ },
     \ 'component_function': {
@@ -136,7 +140,12 @@ let g:vimspector_enable_mappings = 'HUMAN'
 let g:vimspector_install_gadgets = {'enable-terminal': 0}
 
 " Habilita treesitter con Lua
+" 
+
 lua << EOF
+
+
+
 require'nvim-treesitter.configs'.setup {
   highlight = { enable = true },
   indent = { enable = true },
@@ -146,9 +155,6 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 
-EOF
-
-lua << EOF
 -- Configuración básica de nvim-ufo
     require('ufo').setup({
       fold_virt_text_handler = function(virt_text, lnum, end_lnum, width)
@@ -228,4 +234,15 @@ vim.cmd([[
 ]])
 
 
+require("noice").setup {
+    -- Basic configuration options
+    lsp = {
+        override = {
+            ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+            ["vim.lsp.util.stylize_markdown"] = true,
+            ["vim.lsp.diagnostic.on_publish_diagnostics"] = false,
+        },
+    },
+    -- Other configurations can go here
+}
 EOF
