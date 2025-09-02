@@ -163,7 +163,6 @@ vnoremap <silent> <leader>ce :ChecklistEnableCheckbox<cr>
 vnoremap <silent> <leader>cd :ChecklistDisableCheckbox<cr>
 
 inoremap <silent> <C-D> <C-W>
-
 " Seleccionar todo el archivo
 nnoremap <silent> <C-a> ggVG
 
@@ -172,15 +171,15 @@ nnoremap <silent> <F12> i
 vnoremap <silent> <F12> <Esc>
 inoremap <silent> <F12> <Right><Esc>
 
-nnoremap <silent> <F11> <plug>NERDCommenterToggle
-vnoremap <silent> <F11> <plug>NERDCommenterToggle
-inoremap <silent> <F11> <Esc><plug>NERDCommenterToggle i
+nnoremap <silent> <leader>cc <plug>NERDCommenterToggle
+vnoremap <silent> <leader>cc <plug>NERDCommenterToggle
 
 nnoremap <silent> <F5> :e<CR>
 inoremap <silent> <F5> i:e<CR><right>i
 
 nnoremap <silent> qq :q!<CR> 
 
+" unmap <C-u>
 nnoremap <silent> <C-u> <C-r>
 
  "nnoremap <silent> <C-b> :g/.*\n^{/yank A<cr>:bn<cr>pkdd:%s/$/;/<cr>:g/::/d B<cr>A<cr><cr>class <cr>{<cr>};<esc>"BP:%s/[^ ]\+:://<cr>j%jyt(kk$p=ipjA<cr>public:<esc>

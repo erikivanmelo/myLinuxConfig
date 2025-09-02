@@ -91,5 +91,7 @@ Plug 'tpope/vim-dispatch'
 " Agregar a tu archivo de configuración de Neovim
 "Plug 'nvim-telescope/telescope.nvim', {'do': ':UpdateRemotePlugins'}
 
+Plug 'Exafunction/windsurf.vim'
+Plug 'hrsh7th/nvim-cmp'
 
 call plug#end()
