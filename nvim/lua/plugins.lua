@@ -17,9 +17,32 @@ return {
 
   -- Status bar / Lint / Theme
   { 'dense-analysis/ale' },
-  { 'itchyny/lightline.vim' },
   { 'morhetz/gruvbox', lazy = false, priority = 1000 },
-  { 'shinchu/lightline-gruvbox.vim' },
+  {
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    opts = {
+      options = {
+        theme = 'gruvbox',
+        globalstatus = true,
+        component_separators = { left = '', right = '' },
+        section_separators = { left = '', right = '' },
+      },
+      sections = {
+        lualine_a = { 'mode' },
+        lualine_b = { 'branch', 'diff', { 'diagnostics', sources = { 'nvim_lsp' } } },
+        lualine_c = { { 'filename', path = 1, symbols = { modified = ' [+]' } } },
+        lualine_x = { 'encoding', 'filetype', 'filesize' },
+        lualine_y = { 'progress' },
+        lualine_z = { 'location' },
+      },
+      inactive_sections = {
+        lualine_a = {}, lualine_b = {},
+        lualine_c = { { 'filename', path = 1 } },
+        lualine_x = { 'location' }, lualine_y = {}, lualine_z = {},
+      },
+    },
+  },
 
   -- Files management
   { 'scrooloose/nerdtree' },

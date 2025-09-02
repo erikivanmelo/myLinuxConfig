@@ -25,43 +25,6 @@ g.multi_cursor_prev_key            = '<C-p>'
 g.multi_cursor_skip_key            = '<C-x>'
 g.multi_cursor_quit_key            = '<Esc>'
 
--- lightline configuration (converted dict to Lua table)
-g.lightline = {
-  colorscheme = 'gruvbox',
-  active = {
-    left = {
-      { 'mode', 'paste' },
-      {},
-      { 'relativepath', 'modified' },
-    },
-    right = {
-      { 'kitestatus' },
-      { 'gitbranch', 'filetype', 'filesize', 'percent', 'lineinfo' },
-    },
-  },
-  inactive = {
-    left = {
-      { 'inactive' },
-      { 'relativepath' },
-    },
-    right = {
-      { 'bufnum' },
-    },
-  },
-  component = {
-    bufnum = '%n',
-    inactive = 'inactive',
-    filesize = '%{FileSize()}',
-  },
-  component_function = {
-    gitbranch = 'gitbranch#name',
-  },
-  subseparator = {
-    left = '',
-    right = '',
-  },
-}
-
 -- NERDTree
 vim.g.NERDTreeShowHidden = 1
 vim.g.NERDTreeQuitOnOpen = 1
@@ -75,10 +38,6 @@ g.nerdtree_tabs_open_on_new_tab = 1
 
 -- Gruvbox
 g.gruvbox_conntrast_dark = 'hard'
-
--- Airline Tagbar extension
-g['airline#extensions#tagbar#enabled'] = 1
-g['airline#extensions#tagbar#flags'] = ''
 
 -- ALE
 g.ale_sign_column_always = 1
