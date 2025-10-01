@@ -34,7 +34,7 @@
 // custom keycodes
 
 // NB! I use Norwegian keyboard layout on my machines, so the keymap probably
-esn't make much sense for US/ANSI users
+//doesn't make much sense for US/ANSI users
 
 #define F_FSLH S(KC_7) // forward slash
 #define F_BSLH KC_EQL // backward slash

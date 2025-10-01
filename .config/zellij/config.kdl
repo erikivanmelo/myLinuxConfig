@@ -37,10 +37,13 @@ keybinds clear-defaults=true {
 
         bind "Alt R" { Resize "Increase left"; }
         bind "Alt S" { Resize "Increase right"; }
-    
         bind "Alt N" { Resize "Increase up"; }
         bind "Alt T" { Resize "Increase down"; }
 
+        bind "Alt G" { Resize "Decrease left"; }
+        bind "Alt L" { Resize "Decrease right"; }
+        bind "Alt H" { Resize "Decrease up"; }
+        bind "Alt C" { Resize "Decrease down"; }
 
         //rename tab
         bind "Alt ," { SwitchToMode "renametab"; TabNameInput 0; }

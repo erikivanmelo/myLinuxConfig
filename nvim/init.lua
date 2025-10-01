@@ -26,10 +26,6 @@ pcall(function()
   require('globals')
 end)
 
--- Load keymaps
-pcall(function()
-  require('maps')
-end)
 
 -- 5) Load UI (colorscheme and highlights)
 pcall(function()
@@ -42,6 +38,11 @@ pcall(function()
   require('plugin.noice')
   require('plugin.treesitter')
   require('plugin.ufo')
+end)
+
+-- Load keymaps
+pcall(function()
+  require('maps')
 end)
 
 -- 7) Load autocmds

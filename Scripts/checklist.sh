@@ -1,79 +1,93 @@
 #!/bin/bash
-theEndBase=false;
 
-#The lists folder
-base="$HOME/Documents/Notes/checklists"
+# Configuration
+BASE_DIR="$HOME/Documents/Notes/checklists"
+DMENU_OPTS=(-i -l 1000)  # Options as array
+THEME=(-fn "Fira Code-17" -nb "#1d2021" -nf "#ebdbb2" -sb "#176786" -sf "#ebdbb2")
 
-if [ ! -d $base ]; then
-	mkdir $base
-fi
+init_base_dir() {
+    [[ ! -d "$BASE_DIR" ]] && mkdir -p "$BASE_DIR"
+}
 
-while [[ $theEndBase == false ]]; do
-	file="`ls $base | dmenu -i -l 100 `"
-	contentBase=`ls $base`
+show_main_menu() {
+    ls "$BASE_DIR" | dmenu "${DMENU_OPTS[@]}" "${THEME[@]}"
+}
 
-	#if you didn't select eny list the script closes
-	if [ -z $file ]; then
-		theEndBase=true;
-		echo "`basename -- "$0"` closed."
+show_items_menu() {
+    local file="$1"
+    cat "$BASE_DIR/$file" | dmenu "${DMENU_OPTS[@]}" "${THEME[@]}"
+}
 
-	#if the list name ends with "--remove" the list is removed
-	elif [[ $file == *"--remove" ]]; then
-		rm "$base/${file: 0:-9}"
-		echo "File \"${file: 0:-9}\" removed."
+process_item() {
+    local file="$1"
+    local item="$2"
+    
+    # Check if the item already exists in the list (exact match)
+    if grep -qFx "$item" "$BASE_DIR/$file"; then
+        # If item exists, remove it using sed (escaping slashes in item)
+        sed -i "/^${item//\//\\/}$/d" "$BASE_DIR/$file"
+        echo "Item removed: $item"
+    else
+        # If item does not end with a dot, add one for consistency
+        [[ "${item: -1}" != "." ]] && item="$item."
+        # Add the new item to the list
+        echo "$item" >> "$BASE_DIR/$file"
+        echo "Item added: $item"
+    fi
+}
 
-	
-	elif [[ $file == *" --rename "* ]]; then
+create_list() {
+    local file="$1"
+    # If filename does not end with .txt, append it
+    [[ "$file" != *".txt" ]] && file="$file.txt"
+    touch "$BASE_DIR/$file"
+    echo "List created: $file"
+}
 
-		IFS=' --rename ' read -a rn <<< "$file"	
+main() {
+    init_base_dir
+    
+    while true; do
+        file=$(show_main_menu)
+        [[ -z "$file" ]] && break
+        
+        # Special operations
+        if [[ "$file" == *" --remove" ]]; then
+            # If the selected option ends with " --remove", delete the file
+            local file="${file% --remove}"
+            rm "$BASE_DIR/$file"
 
-		echo dice ${rn[0]}
+            echo "List deleted: $file"
+            
+            continue
 
-		echo y ${rn[1]}
-		if [[ ${rn[1]} != *".txt" ]]; then
-			mv "$base/${rn[0]}" "$base/${rn[1]}.txt"
-		else
-			mv "$base/${rn[0]}" "$base/${rn[1]}"
-		fi
+        elif [[ "$file" == *" --rename "* ]]; then
+            # If the selected option matches the rename pattern, extract old and new names
+            local old_name="${file%% --rename *}"
+            local new_name="${file#* --rename }"
 
-		echo "File \"$base/${rn[0]}\" renamed to \"$base/${rn[1]}\"."
-		#file="${item: 3}"
-		#${time[0]}
+            mv "$BASE_DIR/$old_name" "$BASE_DIR/$new_name.txt"
 
-	#if the entered list name exists, the list is opened
-	elif [[ $contentBase =~ $file ]]; then
-		echo "File \"$file\" opened."
-		theEndFile=false;
-		while [[ $theEndFile == false ]]; do
-			item="`cat "$base/$file" | dmenu -i -l 100 `"
+            echo "List renamed: $old_name → $new_name.txt"
 
-			#if you didn't select any item, it returns to the principal list
-			if [ -z "$item" ]; then
-				theEndFile=true;
-				echo "File \"$file\" closed."
-			
-			elif grep -q "$item" "$base/$file"; then
-				sed -i "/$item/d" "$base/$file"
-				echo "Item \"$item\" removed."
-			
-			else
+            continue
 
-				if [[ "${item: -1}" != '.' ]]; then
-					item="$item."
-				fi
-				echo $item  >> "$base/$file"
-				echo "Item \"$item\" added."
-			fi
-		done
+        fi
+        
+        # Check if list exists
+        if [[ -f "$BASE_DIR/$file" ]]; then
+            echo "List opened: $file"
+            
+            while true; do
+                item=$(show_items_menu "$file")
+                [[ -z "$item" ]] && break
+                process_item "$file" "$item"
+            done
+            
+        else
+            create_list "$file"
+        fi
+    done
+}
 
-	#if the name of the entered list doesn't exist, the list is created
-	else
-		if [[ $file != *".txt" ]]; then
-			file="$file.txt"
-		fi
-
-		echo "File \"'$file'\" added."
-		touch "$base/$file"
-	fi
-
-done
+main

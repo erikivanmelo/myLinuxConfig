@@ -16,9 +16,12 @@ map('n', '<F4>', ':vsplit<CR>', silent)
 map('i', '<F4>', '<Esc>:vsplit<CR>i', silent)
 
 -- Find
+map('v', '/', 'y/<C-R>"_')
 map('n', '<leader>ff', ':lua Snacks.picker.files()<cr>', silent)
 map('n', '<leader>fg', ':lua Snacks.picker.lines()<cr>', silent)
+map('v', '<leader>fg', '"zy:lua Snacks.picker.lines()<CR><C-R>z', silent)
 map('n', '<leader>fc', ':lua Snacks.picker.grep()<cr>', silent)
+map('v', '<leader>fc', 'y:lua Snacks.picker.grep()<cr><C-R>"', silent)
 map('n', '<Leader>fb', ':lua Snacks.picker.buffers()<cr>', silent)
 map('n', '<Leader>fe', ':lua Snacks.explorer()<cr>', silent)
 map('n', '<Leader>fr', ':RnvimrToggle<cr>', silent)
@@ -50,8 +53,8 @@ map('n', '<leader>nr', ':set relativenumber!<CR>', silent)
 -- Replace text helpers
 map('i', '<C-M-f>', '<Esc>:%s///gc<Left><Left><Left><Left>')
 map('n', '<C-M-f>', ':%s///gc<Left><Left><Left><Left>')
-map('v', '<C-M-f>', 'y:%s/<C-R>"//gc<Left><Left><Left>')
-
+map('v', '<C-M-f>', 'zy:%s/<C-R>z//gc<Left><Left><Left>')
+map('x', 'p', 'pgvy', { noremap = true, silent = true })
 -- Delete helpers
 map('n', '<C-Del>', 'dw', silent)
 map('n', '<C-Backspace>', 'bdw', silent)
@@ -60,19 +63,19 @@ map('n', '<Del>', '"_<Del>', silent)
 map('n', '<Backspace>', 'X', silent)
 
 -- :W user command and save mappings
-vim.api.nvim_create_user_command('W', function()
-  local path = vim.fn.expand('%:p')
-  if vim.fn.filereadable(path) == 1 then
-    vim.cmd('write')
-  else
-    local nuevo = vim.fn.input('Filename: ')
-    if nuevo ~= '' then
-      vim.cmd('write ' .. nuevo)
-    end
-  end
-end, {})
-map('i', '<C-s>', '<Esc>:W<CR>', silent)
-map('n', '<C-s>', ':W<CR>', silent)
+--vim.api.nvim_create_user_command('W', function()
+  --local path = vim.fn.expand('%:p')
+  --if vim.fn.filereadable(path) == 1 then
+    --vim.cmd('write')
+  --else
+    --local nuevo = vim.fn.input('Filename: ')
+    --if nuevo ~= '' then
+      --vim.cmd('write ' .. nuevo)
+    --end
+  --end
+--end, {})
+map('i', '<C-s>', '<Esc>:w<CR>', silent)
+map('n', '<C-s>', ':w<CR>', silent)
 
 -- :Tabclose user command and helpers
 vim.api.nvim_create_user_command('Tabclose', function()
@@ -159,8 +162,17 @@ map('n', '<leader><F6>', ':DiffviewClose<cr>', silent)
 --map('n', '<leader>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', silent)
 
 -- Completado inteligente
-map('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', { expr = true })
-map('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<S-Tab>"', { expr = true })
+-- map('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', { expr = true })
+-- map('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<S-Tab>"', { expr = true })
+
+-- Mapeos para completado con CoC
+map('i', '<End>', function()
+  return vim.fn['coc#pum#visible']() == 1 and vim.fn['coc#pum#confirm']() or '<End>'
+end, { expr = true })
+
+map('i', '<Home>', function()
+  return vim.fn['coc#pum#visible']() == 1 and vim.fn['coc#pum#cancel']() or '<Home>'
+end, { expr = true })
 
 -- tmux navigator
     -- left
@@ -180,7 +192,7 @@ map('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<S-Tab>"', { expr = true })
     map('i', '<C-c>', '<Esc>:TmuxNavigateDown<cr>', silent)
 
 -- Checklist plugin
-map('n', '<leader>ct', ':ChecklistToggleCheckbox<cr>', silent)
+map('n', '<leader>ch', ':ChecklistToggleCheckbox<cr>', silent)
 map('n', '<leader>ce', ':ChecklistEnableCheckbox<cr>', silent)
 map('n', '<leader>cd', ':ChecklistDisableCheckbox<cr>', silent)
 map('v', '<leader>ct', ':ChecklistToggleCheckbox<cr>', silent)
@@ -190,3 +202,11 @@ map('v', '<leader>cd', ':ChecklistDisableCheckbox<cr>', silent)
 -- NERDCommenter
 map('n', '<leader>cc', '<plug>NERDCommenterToggle', silent)
 map('v', '<leader>cc', '<plug>NERDCommenterToggle', silent)
+
+-- Obsidian
+map('n', '<leader>on', ':ObsidianNew<cr>', silent)
+map('n', '<leader>os', ':ObsidianSearch<cr>', silent)
+
+-- coc
+map('n', '<A-Tab>', ':CocCommand clangd.switchSourceHeader<cr>', silent)
+map('n', '<f2>'   , ':CocCommand tsserver.goToSourceDefinition<cr>', silent)

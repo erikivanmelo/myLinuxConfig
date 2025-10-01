@@ -1,5 +1,23 @@
+# Verifica si la sesión "0" ya existe
+#if [ -z "$TMUX" ]; then
+    #if ! tmux has-session -t Console 2>/dev/null; then
+        ## Si no existe, crea una nueva sesión llamada "0"
+        #exec tmux new-session -s Console
+    #else
+        ## Si existe, adjúntate a la sesión "0"
+        #exec tmux attach-session -t Console
+    #fi
+#fi
+if [ -z "$ZELLIJ" ]; then
+    zellij
+fi
+
+export PATH=$HOME/Qt5.6.3/5.6.3/gcc_64/bin:$PATH
+export LD_LIBRARY_PATH=$HOME/Qt5.6.3/5.6.3/gcc_64/lib:$LD_LIBRARY_PATH
+export PATH=$HOME/llvm15/bin:$PATH
+
 export GOPATH="$HOME/go"
-export PATH="$PATH:$HOME/bin:$GOPATH/bin"
+export PATH="$PATH:$HOME/Scripts:$GOPATH/bin"
 # Personal Zsh configuration file. It is strongly recommended to keep all
 # shell customization and configuration (including exported environment
 # variables such as PATH) in this file or in files sourced from it.
@@ -105,6 +123,15 @@ alias ls="${aliases[ls]:-ls} -A"
 setopt glob_dots     # no special treatment for file names with a leading dot
 setopt no_auto_menu  # require an extra TAB press to open the completion menu
 
+function ./ {
+    local file="$1"
+    if [[ -f "$file" && ! -x "$file" ]]; then
+        echo "✏️  Abriendo con el programa predeterminado..."
+        xdg-open "$file" &>/dev/null &  # Linux
+    else
+        command ./ "$@"
+    fi
+}
 
 twf-widget() {
   local selected=$(twf --height=0.5)
@@ -119,3 +146,10 @@ bindkey '^T' twf-widget
 export VISUAL=nvim;
 export EDITOR=nvim;
 export PATH="$PATH:$(ruby -e 'puts Gem.user_dir')/bin"
+export GEM_HOME="$HOME/.gem"
+export PATH="$GEM_HOME/bin:$PATH"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+

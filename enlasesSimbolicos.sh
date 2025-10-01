@@ -3,7 +3,6 @@ ln -s .vim ~/
 ln -s Pictures ~/
 ln -s Scripts ~/
 ln -s .aliases ~/
-ln -s .aliases ~/
 ln -s .vimrc ~/
 ln -s .zshenv ~/
 ln -s .zshrc ~/

@@ -9,6 +9,27 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
+# Verificar conexión a internet
+echo "Verificando conexión a internet..."
+if ! ping -c 1 archlinux.org &> /dev/null; then
+    echo "ERROR: No hay conexión a internet. Configura la red primero."
+    echo "Usa: systemctl start NetworkManager && nmtui"
+    exit 1
+fi
+
+# Actualizar mirror list para mejor velocidad
+echo "Actualizando mirror list..."
+pacman -Syy
+
+# Verificar si estamos en una VM
+if grep -q "VirtualBox\|VMware\|QEMU" /sys/class/dmi/id/product_name 2>/dev/null; then
+    echo "Máquina virtual detectada - ajustando configuración..."
+    # Instalar guest additions si es VirtualBox
+    if grep -q "VirtualBox" /sys/class/dmi/id/product_name 2>/dev/null; then
+        echo "VirtualBox detectado - considera instalar guest additions después"
+    fi
+fi
+
 # Enumera los discos disponibles
 lsblk
 

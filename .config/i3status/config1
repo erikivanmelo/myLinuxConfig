@@ -1,14 +1,13 @@
-order += "volume master"
+order += "audio"
 order += "battery pc"
 order += "mytime"
 
 
-volume master {
-        format = "🔊 %volume"
-        format_muted = "🔊⃠ (%volume)"
-        device = "default"
-        mixer = "Master"
-        mixer_idx = 0
+audio {
+        output_aliases = "
+            alsa_output.pci-0000_00_lf.3.analog-stereo:🔊,
+            bluez_output.84_AC_60_29_EE_08.1:🎧
+        "
 }
 
 battery pc{

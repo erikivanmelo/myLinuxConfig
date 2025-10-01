@@ -6,7 +6,7 @@ local opt = vim.opt
 -- Numbers and UI
 opt.number = true
 opt.relativenumber = true
-opt.numberwidth = 1
+opt.numberwidth = 4
 opt.showcmd = true
 opt.ruler = true
 opt.cursorline = true
@@ -32,9 +32,9 @@ opt.autoread = true
 opt.tags = { './tags', 'tags;$HOME' }
 
 -- Indentation and tabs
-opt.tabstop = 4
-opt.softtabstop = 4
-opt.shiftwidth = 4
+opt.tabstop = 2
+opt.softtabstop = 2
+opt.shiftwidth = 2
 opt.expandtab = true
 opt.smarttab = true
 opt.smartindent = true
