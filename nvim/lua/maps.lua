@@ -26,6 +26,29 @@ map('n', '<Leader>fb', ':lua Snacks.picker.buffers()<cr>', silent)
 map('n', '<Leader>fe', ':lua Snacks.explorer()<cr>', silent)
 map('n', '<Leader>fr', ':RnvimrToggle<cr>', silent)
 
+vim.keymap.set("n", "<leader>ft", 
+  function()
+    vim.opt.relativenumber = true
+    Snacks.picker.todo_comments({
+      keywords = {
+        "TODO",
+        "FIXME",
+        "BUG",
+        "ISSUE",
+        "WARNING",
+        "XXX",
+        "OPTIM",
+        "PERFORMANCE",
+        "OPTIMIZE",
+        "INFO",
+        "TESTING",
+        "PASSED",
+        "FAILED"
+      }
+    })
+  end, { desc = "Find TODOs ", silent = true }
+)
+
 -- Text navigation
 map('n', '<S-Up>', ':m-2<CR>', silent)
 map('n', '<S-Down>', ':m+<CR>', silent)

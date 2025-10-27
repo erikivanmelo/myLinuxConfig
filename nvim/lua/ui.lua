@@ -2,6 +2,8 @@
 
 local api = vim.api
 
+api.nvim_set_hl(0, "IndentGruvbox", { fg = "#504945" })
+
 -- Apply colorscheme (ensure plugin is loaded early)
 local ok, err = pcall(function()
   vim.cmd.colorscheme('gruvbox')
@@ -24,3 +26,5 @@ api.nvim_set_hl(0, 'VertSplit', { fg = '#2e2e2e' })
 
 -- Indent Blankline scope color
 api.nvim_set_hl(0, 'IblScope', { fg = '#74547d', bg = 'NONE' })
+
+api.nvim_set_hl(0, "SnacksIndent", { fg = "#504945" })

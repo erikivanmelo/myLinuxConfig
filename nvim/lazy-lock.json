@@ -3,7 +3,7 @@
   "ale": { "branch": "master", "commit": "d2f4090c339f83eaf0904d7cdee38b5076c3fd04" },
   "bufferline.nvim": { "branch": "main", "commit": "655133c3b4c3e5e05ec549b9f8cc2894ac6f51b3" },
   "chelper.vim": { "branch": "master", "commit": "d1ba212322041a620c5f352434034b755d9e1924" },
-  "coc.nvim": { "branch": "master", "commit": "0b91e7abeb4cd0ad91d1096b4e16f42ca58fbe92" },
+  "coc.nvim": { "branch": "master", "commit": "2467f978e75c42a63ab20d49771ccad19373629a" },
   "diffview.nvim": { "branch": "main", "commit": "4516612fe98ff56ae0415a259ff6361a89419b0a" },
   "distant.nvim": { "branch": "v0.3", "commit": "67d6b066e8490725718b79f643966f4eafc7da3c" },
   "editorconfig-vim": { "branch": "master", "commit": "6a58b7c11f79c0e1d0f20533b3f42f2a11490cf8" },

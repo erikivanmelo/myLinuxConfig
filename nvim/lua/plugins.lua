@@ -80,37 +80,61 @@ return {
     -- your configuration comes here
     -- or leave it empty to use the default settings
     -- refer to the configuration section below
-    bigfile = { enabled = false },
+    bigfile = { enabled = true },
     dashboard = { enabled = false },
     explorer = { enabled = false },
-    indent = { enabled = false },
+    indent = {
+      enabled = true,
+      animate = { enabled = false }, -- 🚫 sin animaciones
+      char = "▏",
+      scope = {
+        enabled = true,
+        show_start = true,
+        show_end = false,
+      },
+      color = "#504945",
+    },
     input = { enabled = false },
     picker = {
-        enabled = true,
-        matcher = {
-          sort_empty = true
+      enabled = true,
+      matcher = {
+        sort_empty = true
+      },
+      sources = {
+        explorer = {
+          ignored = true,
+          hidden = true,
+          pinned = true,
         },
-        sources = {
-            explorer = {
-                ignored = true,
-                hidden = true,
-                pinned = true,
-            },
-            files = {
-                ignored = false,
-                hidden = true
-            },
-            grep = {
-                ignored = false,
-                hidden = true
-            }
+        files = {
+          ignored = false,
+          hidden = true
+        },
+        grep = {
+          ignored = false,
+          hidden = true
         }
+      },
+      win = {
+        list = {
+          wo = {
+            number = true,
+            relativenumber = true,
+          },
+        },
+        preview = {
+          wo = {
+            number = true,
+            relativenumber = true,
+          },
+        },
+      },
     },
     notifier = { enabled = false },
     quickfile = { enabled = false },
     scope = { enabled = false },
     scroll = { enabled = false },
-    statuscolumn = { enabled = false },
+    statuscolumn = { enabled = true },
     words = { enabled = false },
   },
     },
@@ -129,23 +153,23 @@ return {
   -- IDE / UI
   { 'editorconfig/editorconfig-vim' },
   { 'mg979/vim-visual-multi' },
-  { 'mhinz/vim-signify' },
-  { 'lukas-reineke/indent-blankline.nvim',
-    main = "ibl",
-    config = function()
-      require('ibl').setup({
-        indent = {
-          char = '▏',
-        },
-        scope = {
-          enabled = true,
-        },
-        exclude = {
-          buftypes = { 'terminal' },
-        },
-      })
-    end
-  },
+  --{ 'mhinz/vim-signify' },
+  --{ 'lukas-reineke/indent-blankline.nvim',
+    --main = "ibl",
+    --config = function()
+      --require('ibl').setup({
+        --indent = {
+          --char = '▏',
+        --},
+        --scope = {
+          --enabled = true,
+        --},
+        --exclude = {
+          --buftypes = { 'terminal' },
+        --},
+      --})
+    --end
+  --},
   { 'scrooloose/nerdcommenter' },
   { 'folke/noice.nvim',
     dependencies = { 'MunifTanjim/nui.nvim' },
@@ -210,7 +234,75 @@ return {
   -- Windsurf integration
   { 'Exafunction/windsurf.vim' },
 
-  { "folke/todo-comments.nvim" },
+{
+  "folke/todo-comments.nvim",
+  dependencies = { "nvim-lua/plenary.nvim" },
+  opts = {
+  signs = true, -- show icons in the signs column
+  sign_priority = 8, -- sign priority
+  -- keywords recognized as todo comments
+  keywords = {
+    FIX = {
+      icon = " ", -- icon used for the sign, and in search results
+      color = "error", -- can be a hex color, or a named color (see below)
+      alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
+      -- signs = false, -- configure signs for some keywords individually
+    },
+    TODO = { icon = " ", color = "info" },
+    HACK = { icon = " ", color = "warning" },
+    WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
+    PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+    NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
+    TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
+  },
+  gui_style = {
+    fg = "NONE", -- The gui style to use for the fg highlight group.
+    bg = "BOLD", -- The gui style to use for the bg highlight group.
+  },
+  merge_keywords = true, -- when true, custom keywords will be merged with the defaults
+  -- highlighting of the line containing the todo comment
+  -- * before: highlights before the keyword (typically comment characters)
+  -- * keyword: highlights of the keyword
+  -- * after: highlights after the keyword (todo text)
+  highlight = {
+    multiline = true, -- enable multine todo comments
+    multiline_pattern = "^.", -- lua pattern to match the next multiline from the start of the matched keyword
+    multiline_context = 10, -- extra lines that will be re-evaluated when changing a line
+    before = "", -- "fg" or "bg" or empty
+    keyword = "wide", -- "fg", "bg", "wide", "wide_bg", "wide_fg" or empty. (wide and wide_bg is the same as bg, but will also highlight surrounding characters, wide_fg acts accordingly but with fg)
+    after = "fg", -- "fg" or "bg" or empty
+    pattern = [[.*<(KEYWORDS)\s*:]], -- pattern or table of patterns, used for highlighting (vim regex)
+    comments_only = true, -- uses treesitter to match keywords in comments only
+    max_line_len = 400, -- ignore lines longer than this
+    exclude = {}, -- list of file types to exclude highlighting
+  },
+  -- list of named colors where we try to extract the guifg from the
+  -- list of highlight groups or use the hex color if hl not found as a fallback
+  colors = {
+    error = { "DiagnosticError", "ErrorMsg", "#DC2626" },
+    warning = { "DiagnosticWarn", "WarningMsg", "#FBBF24" },
+    info = { "DiagnosticInfo", "#2563EB" },
+    hint = { "DiagnosticHint", "#10B981" },
+    default = { "Identifier", "#7C3AED" },
+    test = { "Identifier", "#FF00FF" }
+  },
+  search = {
+    command = "rg",
+    args = {
+      "--color=never",
+      "--no-heading",
+      "--with-filename",
+      "--line-number",
+      "--column",
+    },
+    -- regex that will be used to match keywords.
+    -- don't replace the (KEYWORDS) placeholder
+    pattern = [[\b(KEYWORDS):]], -- ripgrep regex
+    -- pattern = [[\b(KEYWORDS)\b]], -- match without the extra colon. You'll likely get false positives
+  },
+}
+
+},
   { "MeanderingProgrammer/render-markdown.nvim",
   dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" }, -- if you use the mini.nvim suite
   ---@module 'render-markdown'
@@ -308,5 +400,64 @@ return {
     })
   end,
 }
+--{
+  --"folke/which-key.nvim",
+  --config = function()
+    --require("which-key").setup {
+      ---- Opciones básicas
+      --plugins = {
+        --spelling = { enabled = true },
+      --},
+      --register = {
+  ---- File / Buffers
+  --f = {
+    --name = "Find/Files",
+    --f = { ":lua Snacks.picker.files()<cr>", "Find Files" },
+    --g = { ":lua Snacks.picker.lines()<cr>", "Find Lines" },
+    --c = { ":lua Snacks.picker.grep()<cr>", "Grep" },
+    --b = { ":lua Snacks.picker.buffers()<cr>", "Buffers" },
+    --e = { ":lua Snacks.explorer()<cr>", "Explorer" },
+    --r = { ":RnvimrToggle<cr>", "Ranger Toggle" },
+  --},
+
+  ---- Git
+  --g = {
+    --name = "Git",
+    --c = { ':!git commit -m ""<Left>', "Commit" },
+    --p = { ":!git pull<CR>", "Pull" },
+    --P = { ":!git push<CR>", "Push" },
+    --C = { ":lua Snacks.picker.git_branches()<cr>", "Checkout Branch" },
+  --},
+
+  ---- Checklist
+  --c = {
+    --name = "Checklist",
+    --h = { ":ChecklistToggleCheckbox<cr>", "Toggle Checkbox" },
+    --e = { ":ChecklistEnableCheckbox<cr>", "Enable Checkbox" },
+    --d = { ":ChecklistDisableCheckbox<cr>", "Disable Checkbox" },
+    --t = { ":ChecklistToggleCheckbox<cr>", "Toggle Checkbox (Visual)" },
+  --},
+
+  ---- Comments
+  --cc = { "<plug>NERDCommenterToggle", "Toggle Comment" },
+
+  ---- Obsidian
+  --o = {
+    --name = "Obsidian",
+    --n = { ":Obsidian new<cr>", "New Note" },
+    --s = { ":Obsidian search<cr>", "Search Notes" },
+  --},
+
+  ---- LSP / Code
+  --f = { "<cmd>lua vim.lsp.buf.format({async = true})<CR>", "Format Code" },
+  --ca = { "<cmd>lua vim.lsp.buf.code_action()<CR>", "Code Action" },
+--}
+      ---- Puedes definir tus descripciones de teclas
+      ---- por ejemplo:
+      ---- ["<leader>f"] = { name = "Find" },
+      ---- ["<leader>c"] = { name = "Checklist" }
+    --}
+  --end
+--}
 
 }
