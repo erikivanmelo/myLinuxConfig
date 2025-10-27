@@ -10,6 +10,7 @@ if not vim.loop.fs_stat(lazypath) then
   })
 end
 vim.opt.rtp:prepend(lazypath)
+vim.opt.termguicolors = true
 
 -- 2) Load plugins (spec at nvim/lua/plugins.lua)
 pcall(function()

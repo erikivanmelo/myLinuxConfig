@@ -16,7 +16,7 @@ map('n', '<F4>', ':vsplit<CR>', silent)
 map('i', '<F4>', '<Esc>:vsplit<CR>i', silent)
 
 -- Find
-map('v', '/', 'y/<C-R>"_')
+map('v', '/', '"ay/<C-R>a')
 map('n', '<leader>ff', ':lua Snacks.picker.files()<cr>', silent)
 map('n', '<leader>fg', ':lua Snacks.picker.lines()<cr>', silent)
 map('v', '<leader>fg', '"zy:lua Snacks.picker.lines()<CR><C-R>z', silent)
@@ -50,10 +50,11 @@ map('n', '<F3>', ':set hlsearch!<CR>', silent)
 map('i', '<F3>', '<Esc>:set hlsearch!<CR>i<Right>', silent)
 map('n', '<leader>nr', ':set relativenumber!<CR>', silent)
 
+-- example in find: map('v', '/', '"ay/<C-R>a')
 -- Replace text helpers
 map('i', '<C-M-f>', '<Esc>:%s///gc<Left><Left><Left><Left>')
 map('n', '<C-M-f>', ':%s///gc<Left><Left><Left><Left>')
-map('v', '<C-M-f>', 'zy:%s/<C-R>z//gc<Left><Left><Left>')
+map('v', '<C-M-f>', '"ay:%s/<C-R>a//gc<Left><Left><Left>')
 map('x', 'p', 'pgvy', { noremap = true, silent = true })
 -- Delete helpers
 map('n', '<C-Del>', 'dw', silent)
@@ -204,9 +205,9 @@ map('n', '<leader>cc', '<plug>NERDCommenterToggle', silent)
 map('v', '<leader>cc', '<plug>NERDCommenterToggle', silent)
 
 -- Obsidian
-map('n', '<leader>on', ':ObsidianNew<cr>', silent)
-map('n', '<leader>os', ':ObsidianSearch<cr>', silent)
+map('n', '<leader>on', ':Obsidian new<cr>', silent)
+map('n', '<leader>os', ':Obsidian search<cr>', silent)
 
 -- coc
 map('n', '<A-Tab>', ':CocCommand clangd.switchSourceHeader<cr>', silent)
-map('n', '<f2>'   , ':CocCommand tsserver.goToSourceDefinition<cr>', silent)
+map('n', '<f2>'   , ':ALEGoToDefinition<cr>', silent)
