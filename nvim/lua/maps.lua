@@ -25,6 +25,8 @@ map('v', '<leader>fc', 'y:lua Snacks.picker.grep()<cr><C-R>"', silent)
 map('n', '<Leader>fb', ':lua Snacks.picker.buffers()<cr>', silent)
 map('n', '<Leader>fe', ':lua Snacks.explorer()<cr>', silent)
 map('n', '<Leader>fr', ':RnvimrToggle<cr>', silent)
+map('n', '<Leader>fd', ':Telescope coc diagnostics<cr>', silent)
+map('n', '<Leader>fs', ':Telescope coc document_symbols<cr>', silent)
 
 vim.keymap.set("n", "<leader>ft", 
   function()
@@ -163,7 +165,7 @@ map('i', '<F1>', '<Right><Esc>:GitBlame<CR>i', silent)
 map('n', '<leader>gc', ':!git commit -m ""<Left>')
 map('n', '<leader>gp', ':!git pull<CR>', silent)
 map('n', '<leader>gP', ':!git push<CR>', silent)
-map('n', '<leader>gC', ':lua Snacks.picker.git_branches()<cr>', silent)
+map('n', '<leader>gb', ':lua Snacks.picker.git_branches()<cr>', silent)
 map('n', '<F6>', ':DiffviewOpen<cr>', silent)
 map('i', '<F6>', '<Esc>:DiffviewOpen<cr>', silent)
 map('n', '<leader><F6>', ':DiffviewClose<cr>', silent)
@@ -233,4 +235,12 @@ map('n', '<leader>os', ':Obsidian search<cr>', silent)
 
 -- coc
 map('n', '<A-Tab>', ':CocCommand clangd.switchSourceHeader<cr>', silent)
-map('n', '<f2>'   , ':ALEGoToDefinition<cr>', silent)
+
+map('n', 'gd', '<Plug>(coc-definition)', silent)
+map('n', 'gi', '<Plug>(coc-implementation)', silent)
+map('n', 'gy', '<Plug>(coc-type-definition)', silent)
+map('n', 'gr', ':Telescope coc references<cr>', silent)
+
+
+map('n', '<leader>cr', '<Plug>(coc-rename)', silent)
+map('n', '<leader>ca', '<Plug>(coc-codeaction)', silent)

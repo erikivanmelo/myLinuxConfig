@@ -1,3 +1,20 @@
 {
   "clangd.path": "/home/dai/llvm15/bin/clangd",
+  "clangd.arguments": [
+    "--clang-tidy",
+    "--cross-file-rename",
+    "--completion-style=detailed",
+    "--header-insertion=never",
+    "--clang-tidy-checks=clang-analyzer-*,bugprone-*,modernize-*,performance-*,readability-*,misc-unused-parameters,cppcoreguidelines-*,cert-*,hicpp-*,-*unused-variable"
+  ],
+  "clangd.fallbackFlags": [
+    "-Wall",
+    "-Wextra",
+    "-Wpedantic",
+    "-std=c++11"
+  ],
+  "diagnostic.errorSign": "✖",
+  "diagnostic.warningSign": "⚠",
+  "diagnostic.infoSign": "ℹ",
+  "diagnostic.hintSign": "➤"
 }

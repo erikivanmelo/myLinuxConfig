@@ -29,6 +29,20 @@ return {
   },
   { 'nvim-treesitter/nvim-treesitter-refactor' },
 
+  {
+    'nvim-treesitter/nvim-treesitter-context',
+    config = function()
+      require('treesitter-context').setup{
+        enable = true,            -- Habilitar el plugin
+        max_lines = 3,            -- Máx. de líneas que puede mostrar
+        trim_scope = 'outer',     -- Recorta líneas del contexto más externo
+        mode = 'cursor',          -- Modo: 'cursor' o 'topline'
+        separator = nil,          -- Línea separadora, ej. '─'
+        zindex = 20,              -- Prioridad de render
+        on_attach = nil,          -- Función opcional
+      }
+    end
+  },
   -- Folding
   { 'kevinhwang91/promise-async' },
   { 'kevinhwang91/nvim-ufo',
@@ -40,7 +54,35 @@ return {
   { 'kevinhwang91/promise-async' },
 
   -- Status bar / Theme / Lint
-  { 'dense-analysis/ale' },
+  --{
+    ----Fijarse que esto funcione bien, en caso de error en menasjes de error, puede ser esto
+    --'dense-analysis/ale',
+    --lazy = false,
+    --config = function()
+      ---- Desactiva linters automáticos
+      --vim.g.ale_linters_explicit = 1
+      --vim.g.ale_fix_on_save = 0
+      --vim.g.ale_completion_enabled = 0
+
+      ---- No correr ningún linter (solo usar features de navegación)
+      --vim.g.ale_linters = { cpp = {} }
+
+      ---- Desactivar completamente los mensajes en pantalla
+      --vim.g.ale_echo_cursor = 0
+      --vim.g.ale_virtualtext_cursor = 0
+      --vim.g.ale_virtualtext = 0
+      --vim.g.ale_sign_column_always = 1
+
+      ---- Cambiar los signos por estética (aunque no deberían mostrarse)
+      --vim.fn.sign_define("ALEErrorSign", { text = "✖", texthl = "DiagnosticError" })
+      --vim.fn.sign_define("ALEWarningSign", { text = "⚠", texthl = "DiagnosticWarn" })
+      --vim.fn.sign_define("ALEInfoSign", { text = "ℹ", texthl = "DiagnosticInfo" })
+
+      ---- Mapear gd para ir a definición
+      ---- TODO implementarlo en maps.lua
+      ----vim.api.nvim_set_keymap('n', 'gd', '<Plug>(ale_go_to_definition)', { noremap = false, silent = true })
+    --end
+  --},
   { 'morhetz/gruvbox', lazy = false, priority = 1000 },
   {
     'nvim-lualine/lualine.nvim',
@@ -76,68 +118,75 @@ return {
     config = function() require('distant'):setup() end
   },
   { 'folke/snacks.nvim',
-  opts = {
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
-    bigfile = { enabled = true },
-    dashboard = { enabled = false },
-    explorer = { enabled = false },
-    indent = {
-      enabled = true,
-      animate = { enabled = false }, -- 🚫 sin animaciones
-      char = "▏",
-      scope = {
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+      bigfile = { enabled = true },
+      dashboard = { enabled = false },
+      explorer = { enabled = false },
+      indent = {
         enabled = true,
-        show_start = true,
-        show_end = false,
-      },
-      color = "#504945",
-    },
-    input = { enabled = false },
-    picker = {
-      enabled = true,
-      matcher = {
-        sort_empty = true
-      },
-      sources = {
-        explorer = {
-          ignored = true,
-          hidden = true,
-          pinned = true,
+        animate = { enabled = false }, -- 🚫 sin animaciones
+        char = "▏",
+        scope = {
+          enabled = true,
+          show_start = true,
+          show_end = false,
         },
-        files = {
-          ignored = false,
-          hidden = true
-        },
-        grep = {
-          ignored = false,
-          hidden = true
-        }
       },
-      win = {
-        list = {
-          wo = {
-            number = true,
-            relativenumber = true,
+      input = { enabled = false },
+      picker = {
+        enabled = true,
+        matcher = {
+          sort_empty = true
+        },
+        sources = {
+          explorer = {
+            ignored = true,
+            hidden = true,
+            pinned = true,
+          },
+          files = {
+            ignored = false,
+            hidden = true
+          },
+          grep = {
+            ignored = false,
+            hidden = true
+          }
+        },
+        win = {
+          list = {
+            wo = {
+              number = true,
+              relativenumber = true,
+            },
+          },
+          preview = {
+            wo = {
+              number = true,
+              relativenumber = true,
+            },
           },
         },
-        preview = {
-          wo = {
-            number = true,
-            relativenumber = true,
-          },
-        },
       },
+      notifier = { enabled = false },
+      quickfile = { enabled = false },
+      scope = { enabled = false },
+      scroll = { enabled = false },
+      statuscolumn = { enabled = false },
+      words = { enabled = false },
     },
-    notifier = { enabled = false },
-    quickfile = { enabled = false },
-    scope = { enabled = false },
-    scroll = { enabled = false },
-    statuscolumn = { enabled = true },
-    words = { enabled = false },
+    --snacks setup
+    config = function(_, opts)
+      require("snacks").setup(opts)
+
+      vim.schedule(function()
+        vim.cmd('highlight SnacksIndentScope guifg=#373669 guibg=NONE')
+      end)
+    end
   },
-    },
   -- Typing
   { 'alvan/vim-closetag' },
   { 'tpope/vim-surround' },
@@ -175,12 +224,10 @@ return {
     dependencies = { 'MunifTanjim/nui.nvim' },
     config = function()
       require('noice').setup({
-          routes = {
-    {
-      filter = { event = "msg_show", kind = "confirm" },
-      opts = { skip = true }, -- no duplicar el confirm
-    },
-  },
+        routes = {
+          filter = { event = "msg_show", kind = "confirm" },
+          opts = { skip = true }, -- no duplicar el confirm
+        },
       })
     end
   },
@@ -222,6 +269,75 @@ return {
   { 'sindrets/diffview.nvim', dependencies = { 'nvim-lua/plenary.nvim' } },
   { 'zivyangll/git-blame.vim' },
   { 'itchyny/vim-gitbranch' },
+  {
+    'lewis6991/gitsigns.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      require('gitsigns').setup {
+        signs = {
+          add          = { text = '┃' },
+          change       = { text = '┃' },
+          delete       = { text = '_' },
+          topdelete    = { text = '‾' },
+          changedelete = { text = '~' },
+          untracked    = { text = '┆' },
+        },
+        signs_staged = {
+          add          = { text = '┃' },
+          change       = { text = '┃' },
+          delete       = { text = '_' },
+          topdelete    = { text = '‾' },
+          changedelete = { text = '~' },
+          untracked    = { text = '┆' },
+        },
+        signs_staged_enable = true,
+        signcolumn = true,  -- Toggle with `:Gitsigns toggle_signs`
+        numhl      = false, -- Toggle with `:Gitsigns toggle_numhl`
+        linehl     = false, -- Toggle with `:Gitsigns toggle_linehl`
+        word_diff  = false, -- Toggle with `:Gitsigns toggle_word_diff`
+        watch_gitdir = {
+          follow_files = true
+        },
+        auto_attach = true,
+        attach_to_untracked = false,
+        current_line_blame = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
+        current_line_blame_opts = {
+          virt_text = true,
+          virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
+          delay = 1000,
+          ignore_whitespace = false,
+          virt_text_priority = 100,
+          use_focus = true,
+        },
+        current_line_blame_formatter = '<author>, <author_time:%R> - <summary>',
+        sign_priority = 6,
+        update_debounce = 100,
+        status_formatter = nil, -- Use default
+        max_file_length = 40000, -- Disable if file is longer than this (in lines)
+        preview_config = {
+          -- Options passed to nvim_open_win
+          style = 'minimal',
+          relative = 'cursor',
+          row = 0,
+          col = 1
+        },
+      }
+      vim.schedule(function()
+        vim.cmd [[
+          highlight GitSignsAdd guifg=#00FF00 guibg=NONE
+          highlight GitSignsChange guifg=#FFFF00 guibg=NONE
+          highlight GitSignsDelete guifg=#FF0000 guibg=NONE
+          highlight GitSignsAddNr guifg=#00FF00 guibg=NONE
+          highlight GitSignsChangeNr guifg=#FFFF00 guibg=NONE
+          highlight GitSignsDeleteNr guifg=#FF0000 guibg=NONE
+          highlight GitSignsAddLn guifg=#00FF00 guibg=NONE
+          highlight GitSignsChangeLn guifg=#FFFF00 guibg=NONE
+          highlight GitSignsDeleteLn guifg=#FF0000 guibg=NONE
+        ]]
+      end)
+    end
+  },
+
 
   -- Utilities
   { 'tpope/vim-repeat' },
@@ -399,7 +515,31 @@ return {
       }),
     })
   end,
-}
+},
+
+  {
+    "nvim-telescope/telescope.nvim",
+    dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope-fzf-native.nvim" },
+    build = "make", -- necesario para fzf-native
+    config = function()
+      local telescope = require("telescope")
+      telescope.load_extension("coc") -- carga la extensión de coc
+      telescope.setup{
+        defaults = {
+          -- Opciones personalizables de Telescope
+          prompt_prefix = "🔍 ",
+          selection_caret = "➤ ",
+          path_display = { "smart" },
+        }
+      }
+    end
+  },
+
+  -- Extensión que integra coc.nvim con Telescope
+  {
+    "fannheyward/telescope-coc.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim" }
+  },
 --{
   --"folke/which-key.nvim",
   --config = function()

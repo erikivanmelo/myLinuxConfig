@@ -2,9 +2,11 @@
 -- Migrated from ~/.vimrc
 
 local opt = vim.opt
+local wo = vim.wo
 
 -- Numbers and UI
-opt.number = true
+wo.signcolumn = "yes"
+wo.number = true
 opt.relativenumber = true
 opt.numberwidth = 4
 opt.showcmd = true
@@ -14,6 +16,7 @@ opt.showmatch = true
 opt.termguicolors = true
 opt.laststatus = 2
 opt.showmode = false -- noshowmode
+
 
 -- Mouse and clipboard
 opt.mouse = 'a'
