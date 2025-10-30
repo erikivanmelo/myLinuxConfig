@@ -502,21 +502,6 @@ return {
     },
   },
 
-{
-  "hrsh7th/nvim-cmp",
-  config = function()
-    local cmp = require("cmp")
-    cmp.setup({
-      -- acá ya tenés opciones como sources, snippet, window, etc
-      mapping = cmp.mapping.preset.insert({
-        ["<CR>"] = cmp.mapping.confirm({ select = false }),
-        ["<End>"] = cmp.mapping.confirm({ select = true }),
-        -- otros mapeos...
-      }),
-    })
-  end,
-},
-
   {
     "nvim-telescope/telescope.nvim",
     dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope-fzf-native.nvim" },
