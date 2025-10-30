@@ -525,6 +525,11 @@ return {
     "fannheyward/telescope-coc.nvim",
     dependencies = { "nvim-telescope/telescope.nvim" }
   },
+  {
+    "backdround/global-note.nvim",
+    config = function() require('global-note').setup() end
+  }
+
 --{
   --"folke/which-key.nvim",
   --config = function()
