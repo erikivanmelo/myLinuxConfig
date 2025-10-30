@@ -1,208 +1,235 @@
--- maps/basic.lua - basic (non-plugin) keymaps
+-- maps/basic.lua - Complete non-plugin keymaps (clean + documented)
 local map = vim.keymap.set
-local silent = { silent = true }
+local silentArg = { silent = true }
 
--- Leader
 vim.g.mapleader = ' '
 
--- Vertical split
-  map('n', '<F4>', ':vsplit<CR>', silent)
-  map('i', '<F4>', '<Esc>:vsplit<CR>i', silent)
+-- nmap
+local function nmap(lhs, rhs, desc, silent)
+  silent = silent == nil and false or silent  -- default true
+  local opts = { noremap = true, silent = silent }
+  if desc then opts.desc = desc end
+  map('n', lhs, rhs, opts)
+end
 
--- Code
-  map('n', '<leader>cs', ':CocCommand clangd.switchSourceHeader<cr>', silent)
+-- imap
+local function imap(lhs, rhs, desc, silent)
+  silent = silent == nil and false or silent
+  local opts = { noremap = true, silent = silent }
+  if desc then opts.desc = desc end
+  map('i', lhs, rhs, opts)
+end
 
-  map('n', '<leader>cD', ':Telescope coc diagnostics<cr>', silent)
-  map('n', '<leader>cS', ':Telescope coc document_symbols<cr>', silent)
-  map('n', '<leader>cd', '<Plug>(coc-definition)', silent)
-  map('n', '<leader>ci', '<Plug>(coc-implementation)', silent)
-  map('n', '<leader>cy', '<Plug>(coc-type-definition)', silent)
-  map('n', '<leader>cr', ':Telescope coc references<cr>', silent)
+-- vmap
+local function vmap(lhs, rhs, desc, silent)
+  silent = silent == nil and false or silent
+  local opts = { noremap = true, silent = silent }
+  if desc then opts.desc = desc end
+  map('v', lhs, rhs, opts)
+end
 
-  -- NERDCommenter
-  map('n', '<leader>cc', '<plug>NERDCommenterToggle', silent)
-  map('v', '<leader>cc', '<plug>NERDCommenterToggle', silent)
+-- xmap
+local function xmap(lhs, rhs, desc, silent)
+  silent = silent == nil and false or silent
+  local opts = { noremap = true, silent = silent }
+  if desc then opts.desc = desc end
+  map('x', lhs, rhs, opts)
+end
 
-  -- Mapeos para completado con CoC
-  map('i', '<End>', function()
-    return vim.fn['coc#pum#visible']() == 1 and vim.fn['coc#pum#confirm']() or '<End>'
-  end, { expr = true })
+-----------------------------------------------------------
+-- Window / IDE / General
+-----------------------------------------------------------
 
-  map('i', '<Home>', function()
-    return vim.fn['coc#pum#visible']() == 1 and vim.fn['coc#pum#cancel']() or '<Home>'
-  end, { expr = true })
+-- Splits and reloads
+nmap('<F4>', ':vsplit<CR>', 'Open vertical split', true)
+imap('<F4>', '<Esc>:vsplit<CR>i', 'Open vertical split (insert mode)', true)
 
--- Find and replace
-  -- Replace
-  map('n', '<leader>fR', ':%s///gc<Left><Left><Left><Left>')
-  map('v', '<leader>fR', '"ay:%s/<C-R>a//gc<Left><Left><Left>')
-  map('x', 'p', 'pgvy', { noremap = true, silent = true })
+nmap('<F5>', ':e<CR>', 'Reload current buffer', true)
+imap('<F5>', '<Esc>:e<CR>i', 'Reload current buffer (insert mode)', true)
 
-  -- Find
-  map('v', '/', '"ay/<C-R>a')
-  map('n', 'n', 'nzz', silent)
-  map('n', 'N', 'Nzz', silent)
-  map('n', '<Esc>', ':noh<CR>', silent)
-  map('n', '<leader>fs', ':set hlsearch!<CR>', silent)
+-- Toggles and quitting
+nmap('<leader>nr', ':set relativenumber!<CR>', 'Toggle relative line numbers', true)
+nmap('qq', ':q!<CR>', 'Force quit without saving', true)
 
-  map('n', '<leader>ff', ':lua Snacks.picker.files()<cr>', silent)
-  map('n', '<leader>fg', ':lua Snacks.picker.lines()<cr>', silent)
-  map('n', '<leader>fc', ':lua Snacks.picker.grep()<cr>', silent)
-  map('n', '<leader>fb', ':lua Snacks.picker.buffers()<cr>', silent)
-  map('n', '<leader>fe', ':lua Snacks.explorer()<cr>', silent)
-  map('n', '<leader>fr', ':RnvimrToggle<cr>', silent)
+-- Editing
+imap('<C-D>', '<C-W>', 'Delete previous word', true)
 
-  vim.keymap.set("n", "<leader>ft",
-    function()
-      vim.opt.relativenumber = true
-      Snacks.picker.todo_comments({
-        keywords = {
-          "TODO",
-          "INFO",
-          "WARNING",
-          "FIXME", "BUG", "ISSUE",
-          "OPTIM", "PERFORMANCE", "OPTIMIZE",
-          "TESTING", "PASSED", "FAILED"
-        }
-      })
-    end, { desc = "Find TODOs ", silent = true }
-  )
+-- Terminal Home/End key compatibility
+map({ 'n', 'v', 's', 'o' }, '<ESC>[8~', '<End>', { noremap = true, silent = true, desc = 'End key (terminal)' })
+map({ 'n', 'v', 's', 'o' }, '<ESC>[7~', '<Home>', { noremap = true, silent = true, desc = 'Home key (terminal)' })
 
--- Text navigation
-  map('n', '<S-Up>'  , ':m-2<CR>', silent)
-  map('n', '<S-Down>', ':m+<CR>', silent)
-  map('i', '<S-Up>'  , '<Esc>:m-2<CR>i<Right>', silent)
-  map('i', '<S-Down>', '<Esc>:m+<CR>i<Right>', silent)
-  map('v', '<S-Up>'  , ":m '<-2<CR>gv=gv", silent)
-  map('v', '<S-Down>', ":m '>+1<CR>gv=gv", silent)
+imap('<ESC>[8~', '<End>', 'End key (terminal)', true)
+imap('<ESC>[7~', '<Home>', 'Home key (terminal)', true)
 
-  map('v', '<PageUp>', '10<Up>', silent)
-  map('v', '<PageDown>', '10<Down>', silent)
-  map('n', '<PageUp>', '10<Up>', silent)
-  map('n', '<PageDown>', '10<Down>', silent)
-  map('i', '<PageUp>', '<Esc>10<Up>i', silent)
-  map('i', '<PageDown>', '<Esc>10<Down>i', silent)
+-----------------------------------------------------------
+-- Save / Reload
+-----------------------------------------------------------
+map({ 'n', 'i' }, '<C-s>', '<Esc>:w<CR>', { desc = 'Save file', silent = true })
 
-  map('n', '<S-Left>', '<C-O>', silent)
-  map('n', '<S-Right>', '<C-I>', silent)
+-----------------------------------------------------------
+-- Code / CoC
+-----------------------------------------------------------
+nmap('<leader>cs', ':CocCommand clangd.switchSourceHeader<CR>', 'Switch header/source', true)
+nmap('<leader>cD', ':Telescope coc diagnostics<CR>', 'Diagnostics', true)
+nmap('<leader>cS', ':Telescope coc document_symbols<CR>', 'Symbols', true)
+nmap('<leader>cd', '<Plug>(coc-definition)', 'Go to definition', true)
+nmap('<leader>ci', '<Plug>(coc-implementation)', 'Go to implementation', true)
+nmap('<leader>cy', '<Plug>(coc-type-definition)', 'Go to type definition', true)
+nmap('<leader>cr', ':Telescope coc references<CR>', 'Find references', true)
 
-  map('n', '<C-Home>', 'gg', silent)
-  map('n', '<C-End>', 'G', silent)
+-- Completion helpers (Coc)
+vim.keymap.set('i', '<End>', function()
+  return vim.fn['coc#pum#visible']() == 1 and vim.fn['coc#pum#confirm']() or '<End>'
+end, { expr = true, silent = true, desc = 'Confirm completion or move End' })
 
+vim.keymap.set('i', '<Home>', function()
+  return vim.fn['coc#pum#visible']() == 1 and vim.fn['coc#pum#cancel']() or '<Home>'
+end, { expr = true, silent = true, desc = 'Cancel completion or move Home' })
+
+-----------------------------------------------------------
+-- 💬 Comments
+-----------------------------------------------------------
+map({ 'n', 'v' }, '<leader>cc', '<Plug>NERDCommenterToggle', { desc = 'Toggle comment', silent = true })
+
+-----------------------------------------------------------
+-- 🔍 Find / Replace
+-----------------------------------------------------------
+nmap('<leader>fR', ':%s///gc<Left><Left><Left><Left>', 'Find & Replace (global)', false)
+vmap('<leader>fR', '"ay:%s/<C-R>a//gc<Left><Left><Left>', 'Find & Replace (visual)', false)
+xmap('p', 'pgvy', 'Paste without losing register', true)
+vmap('/', '"ay/<C-R>a', 'Search selection', true)
+nmap('n', 'nzz', 'Next search (centered)', true)
+nmap('N', 'Nzz', 'Prev search (centered)', true)
+nmap('<Esc>', ':noh<CR>', 'Clear highlights', true)
+nmap('<leader>fs', ':set hlsearch!<CR>', 'Toggle hlsearch', true)
+
+nmap('<leader>ff', function() Snacks.picker.files() end, 'Find files', true)
+nmap('<leader>fg', function() Snacks.picker.lines() end, 'Search lines', true)
+nmap('<leader>fc', function() Snacks.picker.grep() end, 'Grep content', true)
+nmap('<leader>fb', function() Snacks.picker.buffers() end, 'Buffers',true)
+nmap('<leader>fe', function() Snacks.explorer() end, 'File explorer', true)
+nmap('<leader>fr', ':RnvimrToggle<CR>', 'Toggle Ranger', true)
+
+nmap('<leader>ft', function()
+  vim.opt.relativenumber = true
+  Snacks.picker.todo_comments({
+    keywords = {
+      "TODO", "INFO", "WARNING",
+      "FIXME", "BUG", "ISSUE",
+      "OPTIM", "PERFORMANCE", "OPTIMIZE",
+      "TESTING", "PASSED", "FAILED",
+    },
+  })
+end, 'Find TODOs', true)
+
+-----------------------------------------------------------
+-- Navigation / Movement
+-----------------------------------------------------------
+nmap('<S-Up>', ':m-2<CR>', 'Move line up (normal)', true)
+nmap('<S-Down>', ':m+<CR>', 'Move line down (normal)', true)
+imap('<S-Up>', '<Esc>:m-2<CR>i<Right>', 'Move line up (insert)', true)
+imap('<S-Down>', '<Esc>:m+<CR>i<Right>', 'Move line down (insert)', true)
+vmap('<S-Up>', ":m '<-2<CR>gv=gv", 'Move selection up (visual)', true)
+vmap('<S-Down>', ":m '>+1<CR>gv=gv", 'Move selection down (visual)', true)
+
+map({ 'n', 'v', 'i' }, '<PageUp>', '10<Up>', silentArg)
+map({ 'n', 'v', 'i' }, '<PageDown>', '10<Down>', silentArg)
+nmap('<S-Left>', '<C-O>', 'Jump backward', true)
+nmap('<S-Right>', '<C-I>', 'Jump forward', true)
+nmap('<C-Home>', 'gg', 'Go to file start', true)
+nmap('<C-End>', 'G', 'Go to file end', true)
+
+-----------------------------------------------------------
 -- Delete helpers
-  map('n', '<C-Del>', 'dw', silent)
-  map('n', '<C-Backspace>', 'bdw', silent)
-  map('v', '<Del>', '"_d', silent)
-  map('n', '<Del>', '"_<Del>', silent)
-  map('n', '<Backspace>', 'X', silent)
-  map('n', 'dr', '"_dd', silent)-- delete line
+-----------------------------------------------------------
+nmap('<C-Del>', 'dw', 'Delete next word', true)
+nmap('<C-Backspace>', 'bdw', 'Delete previous word', true)
+vmap('<Del>', '"_d', 'Delete selection (no yank)', true)
+nmap('<Del>', '"_<Del>', 'Delete char (no yank)', true)
+nmap('<Backspace>', 'X', 'Delete previous char', true)
+nmap('dr', '"_dd', 'Delete line (no yank)', true)
 
+-----------------------------------------------------------
+-- Typing helpers
+-----------------------------------------------------------
+vmap('(', 'c(<C-r>")<Esc>', 'Wrap selection with ()', true)
+vmap('[', 'c[<C-r>"]<Esc>', 'Wrap selection with []', true)
+vmap('{', 'c{<C-r>"}<Esc>', 'Wrap selection with {}', true)
+vmap('"', 'c"<C-r>""<Esc>', 'Wrap selection with ""', true)
+vmap("'", "c'<C-r>\"'<Esc>", "Wrap selection with ''", true)
+vmap('<', '<gv', 'Indent left and keep selection', true)
+vmap('>', '>gv', 'Indent right and keep selection', true)
+vmap('s', ':sort<CR>', 'Sort selection', true)
 
-
--- Misc
-  map('i', '<C-D>', '<C-W>', silent)
-  map('n', '<C-a>', 'ggVG', silent)
-  map('n', 'yf', ':let @+=expand("%:p")<CR>:echo "File path copied!"<CR>', silent)
-
--- IDE
-  map('n', '<leader>nr', ':set relativenumber!<CR>', silent)
-  map('n', 'qq', ':q!<CR>', silent)
-  map('n', '<F5>', ':e<CR>', silent)
-  map('i', '<F5>', 'i:e<CR><right>i', silent)
-
-  -- Terminal key sequences for Home/End
-  map({ 'n', 'v', 's', 'o' }, '<ESC>[8~', '<End>', silent)
-  map({ 'n', 'v', 's', 'o' }, '<ESC>[7~', '<Home>', silent)
-  map('i', '<ESC>[8~', '<End>', silent)
-  map('i', '<ESC>[7~', '<Home>', silent)
-
-  -- Save
-  map('i', '<C-s>', '<Esc>:w<CR>', silent)
-  map('n', '<C-s>', ':w<CR>', silent)
-
-  -- Tabs
-  -- Unmap defaults that conflict and remap window close
-  pcall(vim.keymap.del, 'n', '<C-W><C-D>')
-  pcall(vim.keymap.del, 'n', '<C-W>d')
-  map('i', '<C-t>', '<Esc>:tabnew<CR>i', silent)
-  map('n', '<C-t>', ':tabnew<CR>', silent)
-  map('i', '<C-w>', '<Esc>:Tabclose<CR>i', silent)
-  map('n', '<C-w>', ':Tabclose<CR>', silent)
-
-  -- Tab navigation Alt+1..9
-  for i = 1, 9 do
-    local key = string.format('<M-%d>', i)
-    map('n', key, string.format(':tabn %d<CR>', i), silent)
-    map('i', key, string.format('<Esc>:tabn %d<CR>i', i), silent)
-    map('v', key, string.format('<Esc>:tabn %d<CR>', i), silent)
-  end
-
-  -- :Tabclose
-  vim.api.nvim_create_user_command('Tabclose', function()
-    local bufnr = vim.fn.bufnr('%')
-    local wins = vim.fn.win_findbuf(bufnr)
-    if #wins > 1 then
-      vim.cmd('q')
-      return
-    end
-    local last = vim.fn.bufnr('$')
-    local listed = 0
-    for b = 1, last do
-      if vim.fn.buflisted(b) == 1 then
-        listed = listed + 1
-      end
-    end
-    local lines = vim.api.nvim_buf_get_lines(0, 0, -1, true)
-    if listed == 1 and (#lines == 1 and lines[1] == '') then
-      vim.cmd('q!')
-    else
-      vim.cmd('bd')
-    end
-  end, {})
-
--- Typing speed
-  map('v', '(', 'c(<C-r>")<Esc>', { noremap = true, silent = true })
-  map('v', '[', 'c[<C-r>"]<Esc>', { noremap = true, silent = true })
-  map('v', '{', 'c{<C-r>"}<Esc>', { noremap = true, silent = true })
-  map('v', '"', 'c"<C-r>""<Esc>', { noremap = true, silent = true })
-  map('v', "'", "c'<C-r>\"'<Esc>", { noremap = true, silent = true })
-  map('v', '<', '<gv', silent)
-  map('v', '>', '>gv', silent)
-  map('v', 's' , ':sort<cr>', silent)
-
+-----------------------------------------------------------
 -- Git
-  map('n', '<leader>gB', ':GitBlame<CR>', silent)
-  map('n', '<leader>gc', ':!git commit -m ""<Left>')
-  map('n', '<leader>gp', ':!git pull<CR>', silent)
-  map('n', '<leader>gP', ':!git push<CR>', silent)
-  map('n', '<leader>gb', ':lua Snacks.picker.git_branches()<cr>', silent)
+-----------------------------------------------------------
+nmap('<leader>gB', ':GitBlame<CR>', 'Git blame', true)
+nmap('<leader>gc', ':!git commit -m ""<Left>', 'Git commit', false)
+nmap('<leader>gp', ':!git pull<CR>', 'Git pull', true)
+nmap('<leader>gP', ':!git push<CR>', 'Git push', true)
+nmap('<leader>gb', function() Snacks.picker.git_branches() end, 'Git branches', true)
+nmap('<leader>gd', ':DiffviewOpen<CR>', 'Git diff open', true)
+nmap('<leader>gD', ':DiffviewClose<CR>', 'Git diff close', true)
 
-  map('n', '<leader>gd', ':DiffviewOpen<cr>', silent)
-  map('n', '<leader>gD', ':DiffviewClose<cr>', silent)
+-----------------------------------------------------------
+-- Tabs
+-----------------------------------------------------------
+-- Clean up defaults
+pcall(vim.keymap.del, 'n', '<C-W><C-D>')
+pcall(vim.keymap.del, 'n', '<C-W>d')
 
--- Completado inteligente
--- map('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', { expr = true })
--- map('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<S-Tab>"', { expr = true })
+imap('<C-t>', '<Esc>:tabnew<CR>i', 'New tab', true)
+nmap('<C-t>', ':tabnew<CR>', 'New tab', true)
+imap('<C-w>', '<Esc>:Tabclose<CR>i', 'Close tab', true)
+nmap('<C-w>', ':Tabclose<CR>', 'Close tab', true)
 
--- tmux navigator
-  -- left
-  map('n', '<C-g>', ':TmuxNavigateLeft<cr>', silent)
-  map('i', '<C-g>', '<Esc>:TmuxNavigateLeft<cr>i', silent)
+-- Tab navigation Alt+1..9
+for i = 1, 9 do
+  local key = string.format('<M-%d>', i)
+  map({ 'n', 'i', 'v' }, key, string.format(':tabn %d<CR>', i), vim.tbl_extend('force', silentArg, { desc = 'Go to tab ' .. i }))
+end
 
-  -- up
-  map('n', '<C-h>', ':TmuxNavigateUp<cr>', silent)
-  map('i', '<C-h>', '<Esc>:TmuxNavigateUp<cr>', silent)
+-- Custom :Tabclose command
+vim.api.nvim_create_user_command('Tabclose', function()
+  local bufnr = vim.fn.bufnr('%')
+  local wins = vim.fn.win_findbuf(bufnr)
+  if #wins > 1 then
+    vim.cmd('q')
+    return
+  end
+  local last = vim.fn.bufnr('$')
+  local listed = 0
+  for b = 1, last do
+    if vim.fn.buflisted(b) == 1 then
+      listed = listed + 1
+    end
+  end
+  local lines = vim.api.nvim_buf_get_lines(0, 0, -1, true)
+  if listed == 1 and (#lines == 1 and lines[1] == '') then
+    vim.cmd('q!')
+  else
+    vim.cmd('bd')
+  end
+end, {})
 
-  -- right
-  map('n', '<C-l>', ':TmuxNavigateRight<cr>', silent)
-  map('i', '<C-l>', '<Esc>:TmuxNavigateRight<cr>i', silent)
+-----------------------------------------------------------
+-- Tmux Navigator
+-----------------------------------------------------------
+map({ 'n', 'i' }, '<C-g>', '<Esc>:TmuxNavigateLeft<CR>i', { desc = 'Tmux Left', silent = true })
+map({ 'n', 'i' }, '<C-h>', '<Esc>:TmuxNavigateUp<CR>i', { desc = 'Tmux Up', silent = true })
+map({ 'n', 'i' }, '<C-l>', '<Esc>:TmuxNavigateRight<CR>i', { desc = 'Tmux Right', silent = true })
+map({ 'n', 'i' }, '<C-c>', '<Esc>:TmuxNavigateDown<CR>i', { desc = 'Tmux Down', silent = true })
 
-  -- down
-  map('n', '<C-c>', ':TmuxNavigateDown<cr>', silent)
-  map('i', '<C-c>', '<Esc>:TmuxNavigateDown<cr>', silent)
+-----------------------------------------------------------
+-- Notes / Obsidian
+-----------------------------------------------------------
+nmap('<leader>ng', ':GlobalNote<CR>', 'Open global note', true)
+nmap('<leader>nn', ':Obsidian new<CR>', 'New note', true)
+nmap('<leader>ns', ':Obsidian search<CR>', 'Search notes', true)
 
--- Note helper
-  map('n', '<leader>ng', ':GlobalNote<cr>', silent)
-  map('n', '<leader>nn', ':Obsidian new<cr>', silent)
-  map('n', '<leader>ns', ':Obsidian search<cr>', silent)
-
+-----------------------------------------------------------
+-- Misc
+-----------------------------------------------------------
+nmap('<C-a>', 'ggVG', 'Select all text in buffer', true)
+nmap('yf', ':let @+=expand("%:p")<CR>:echo "File path copied!"<CR>', 'Copy file path to clipboard', true)
