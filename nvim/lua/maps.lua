@@ -17,6 +17,10 @@ map('i', '<F4>', '<Esc>:vsplit<CR>i', silent)
 
 -- Find
 map('v', '/', '"ay/<C-R>a')
+
+map('n', 'n', 'nzz', silent)
+map('n', 'N', 'Nzz', silent)
+map('n', '<Esc>', ':noh<CR>', silent)
 map('n', '<leader>ff', ':lua Snacks.picker.files()<cr>', silent)
 map('n', '<leader>fg', ':lua Snacks.picker.lines()<cr>', silent)
 map('v', '<leader>fg', '"zy:lua Snacks.picker.lines()<CR><C-R>z', silent)
@@ -27,6 +31,8 @@ map('n', '<Leader>fe', ':lua Snacks.explorer()<cr>', silent)
 map('n', '<Leader>fr', ':RnvimrToggle<cr>', silent)
 map('n', '<Leader>fd', ':Telescope coc diagnostics<cr>', silent)
 map('n', '<Leader>fs', ':Telescope coc document_symbols<cr>', silent)
+
+
 
 vim.keymap.set("n", "<leader>ft", 
   function()
@@ -52,10 +58,12 @@ vim.keymap.set("n", "<leader>ft",
 )
 
 -- Text navigation
-map('n', '<S-Up>', ':m-2<CR>', silent)
+map('n', '<S-Up>'  , ':m-2<CR>', silent)
 map('n', '<S-Down>', ':m+<CR>', silent)
-map('i', '<S-Up>', '<Esc>:m-2<CR>i<Right>', silent)
+map('i', '<S-Up>'  , '<Esc>:m-2<CR>i<Right>', silent)
 map('i', '<S-Down>', '<Esc>:m+<CR>i<Right>', silent)
+map('v', '<S-Up>'  , ":m '<-2<CR>gv=gv", silent)
+map('v', '<S-Down>', ":m '>+1<CR>gv=gv", silent)
 
 map('v', '<PageUp>', '10<Up>', silent)
 map('v', '<PageDown>', '10<Down>', silent)
@@ -87,6 +95,7 @@ map('n', '<C-Backspace>', 'bdw', silent)
 map('v', '<Del>', '"_d', silent)
 map('n', '<Del>', '"_<Del>', silent)
 map('n', '<Backspace>', 'X', silent)
+map('n', 'd<Del>', '"_dd', silent)-- delete line
 
 -- :W user command and save mappings
 --vim.api.nvim_create_user_command('W', function()
@@ -155,31 +164,29 @@ map('i', '<F12>', '<Right><Esc>', silent)
 map('n', '<F5>', ':e<CR>', silent)
 map('i', '<F5>', 'i:e<CR><right>i', silent)
 map('n', 'qq', ':q!<CR>', silent)
+map('v', '<', '<gv', silent)
+map('v', '>', '>gv', silent)
+map('n', 'yf', ':let @+=expand("%:p")<CR>:echo "File path copied!"<CR>', silent)
+
+-- En visual mode, pulsás " o ' o ( o [ o { para envolver
+map('v', '(', 'c(<C-r>")<Esc>', { noremap = true, silent = true })
+map('v', '[', 'c[<C-r>"]<Esc>', { noremap = true, silent = true })
+map('v', '{', 'c{<C-r>"}<Esc>', { noremap = true, silent = true })
+map('v', '"', 'c"<C-r>""<Esc>', { noremap = true, silent = true })
+map('v', "'", "c'<C-r>\"'<Esc>", { noremap = true, silent = true })
 
 -- Remap <C-u>
 map('n', '<C-u>', '<C-r>', silent)
 
 -- Git
-map('n', '<F1>', ':GitBlame<CR>', silent)
-map('i', '<F1>', '<Right><Esc>:GitBlame<CR>i', silent)
+map('n', '<leader>gB', ':GitBlame<CR>', silent)
 map('n', '<leader>gc', ':!git commit -m ""<Left>')
 map('n', '<leader>gp', ':!git pull<CR>', silent)
 map('n', '<leader>gP', ':!git push<CR>', silent)
 map('n', '<leader>gb', ':lua Snacks.picker.git_branches()<cr>', silent)
-map('n', '<F6>', ':DiffviewOpen<cr>', silent)
-map('i', '<F6>', '<Esc>:DiffviewOpen<cr>', silent)
-map('n', '<leader><F6>', ':DiffviewClose<cr>', silent)
 
--- LSP
- --Navegación de código
---map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', silent)
---map('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', silent)
---map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', silent)
---map('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', silent)
---map('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', silent)
---map('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<CR>', silent)
---map('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', silent)
---map('n', '<leader>f', '<cmd>lua vim.lsp.buf.format({async = true})<CR>', silent)
+map('n', '<leader>gd', ':DiffviewOpen<cr>', silent)
+map('n', '<leader>gD', ':DiffviewClose<cr>', silent)
 
 --Diagnosticos
 --map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', silent)
@@ -240,7 +247,3 @@ map('n', 'gd', '<Plug>(coc-definition)', silent)
 map('n', 'gi', '<Plug>(coc-implementation)', silent)
 map('n', 'gy', '<Plug>(coc-type-definition)', silent)
 map('n', 'gr', ':Telescope coc references<cr>', silent)
-
-
-map('n', '<leader>cr', '<Plug>(coc-rename)', silent)
-map('n', '<leader>ca', '<Plug>(coc-codeaction)', silent)

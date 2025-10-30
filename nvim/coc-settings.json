@@ -1,4 +1,12 @@
 {
+  "snippets.ultisnips.enable": true,
+  "snippets.extends": {
+    "cpp": ["c"], 
+    "typescript": ["javascript"]
+  },
+  "snippets.userSnippetsDirectory": "~/.config/nvim/snips",
+  "coc.preferences.snippetSupport": true,
+
   "clangd.path": "/home/dai/llvm15/bin/clangd",
   "clangd.arguments": [
     "--clang-tidy",

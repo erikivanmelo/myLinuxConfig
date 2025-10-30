@@ -16,7 +16,7 @@ opt.showmatch = true
 opt.termguicolors = true
 opt.laststatus = 2
 opt.showmode = false -- noshowmode
-
+vim.o.scrolloff = 3
 
 -- Mouse and clipboard
 opt.mouse = 'a'
