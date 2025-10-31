@@ -5,7 +5,7 @@ default_layout "compact"
 session_name "Console"
 attach_to_session true
 pane_frames false
-copy_clipboard "primary"
+copy_clipboard "system"
 theme "gruvbox-dark"
 default_mode "normal"
 
