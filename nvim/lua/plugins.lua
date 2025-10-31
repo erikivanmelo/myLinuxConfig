@@ -528,8 +528,12 @@ return {
   {
     "backdround/global-note.nvim",
     config = function() require('global-note').setup() end
+  },
+  {
+    'Aasim-A/scrollEOF.nvim',
+    event = { 'CursorMoved', 'WinScrolled' },
+    opts = {},
   }
-
 --{
   --"folke/which-key.nvim",
   --config = function()
@@ -570,7 +574,7 @@ return {
 
   ---- Comments
   --cc = { "<plug>NERDCommenterToggle", "Toggle Comment" },
-
+  
   ---- Obsidian
   --o = {
     --name = "Obsidian",
